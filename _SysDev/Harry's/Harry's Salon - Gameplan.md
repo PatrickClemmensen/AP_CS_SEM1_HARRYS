@@ -46,7 +46,7 @@
 - [ ] ✅ Screenshot: Sprint 1 Backlog (Trello) — taken during/at end of Sprint 1
 - [ ] ✅ Screenshot: Sprint 2 Backlog (Trello) — taken during/at end of Sprint 2
 - [ ] ✅ [[Activity Diagrams]] — user interaction with the system _(at minimum one comprehensive diagram; multiple flows recommended)_
-- [ ] ✅ [[Domain Model]] — conceptual model (no methods, no types)
+- [ ] ✅ [[30 Knowledge Base/30 Computer Science concepts/Software Development/Modeling/Domain Model]] — conceptual model (no methods, no types)
 - [ ] ✅ [[UML Class Diagrams]] — class diagram of the **finished** system
 - [ ] ⭐ [[Use Cases]] — _good analysis artefact, not explicitly required in the rapport_
 - [ ] ⭐ [[GRASP]] evaluation — _strengthens class diagram discussion, not required_
@@ -148,121 +148,13 @@ _Output: ITB PowerPoint slides drafted._
     - Each story: one clear role, one clear activity, one clear goal
     - Each acceptance criterion phrased as "how to demo/test" — concrete and verifiable
     - Check [[INVEST]] for each: Independent? Valuable? Estimable? Small? Testable?
-- [x] **[[Domain Model]]** ✅ — draw the conceptual model
+- [x] **[[30 Knowledge Base/30 Computer Science concepts/Software Development/Modeling/Domain Model]]** ✅ — draw the conceptual model
     - Concepts (suggested): `Appointment`, `Customer`, `TimeSlot`, `Payment`, `ClosedDay`
     - Show associations with verb labels and multiplicity
     - NO methods, NO data types — this is a conceptual model, not a class diagram
     - Tool: draw.io or paper → export → `sysdev/diagrams/domain-model.png`
 
-```mermaid
-classDiagram
 
-    class Appointment {
-
-        date
-
-        timeSlot
-
-        status
-
-    }
-
-    class Customer {
-
-        name
-
-        phoneNumber
-
-    }
-
-  
-
-    class Payment {
-
-        amount
-
-        paymentStatus
-
-        paymentDate
-
-    }
-
-  
-
-    class TimeSlot {
-
-        startTime
-
-        endTime
-
-    }
-
-  
-
-    class Owner {
-
-        name
-
-    }
-
-  
-
-    class Assistant {
-
-        name
-
-    }
-
-  
-
-    class Accountant{
-
-        name
-
-    }
-
-  
-
-    class Product {
-
-        name
-
-        price
-
-    }
-
-  
-
-    class OpeningHours {
-
-        date
-
-        status
-
-    }
-
-  
-
-Appointment "1" --> "1" Customer : is booked by
-
-Appointment "1" --> "0..1" Payment: result in
-
-Appointment "1" --> "1" TimeSlot : occupies
-
-Owner "1" --> "0.." Appointment : manages
-
-Assistant "1" --> "0.." Appointment : manages
-
-Accountant "1" --> "0.." Payment : reviews
-
-Owner "1" --> "0.." OpeningHours : registers
-
-Customer "1" --> "0.." Product : purchases
-
-Product "0.." --> "1" Payment : added to
-
-OpeningHours "0.." --> Appointment : controls
-```
 
 - [ ] ⭐ **[[Use Cases]]** — use case diagram with three actors (Harry, Harriet, Revisor)
     - Include system boundary
@@ -277,7 +169,7 @@ OpeningHours "0.." --> Appointment : controls
 
 ### All Day — Activity Diagram + Initial Class Design
 
-- [ ] **[[Activity Diagrams]]** ✅ — model user interaction with the system
+- [x] **[[Activity Diagrams]]** ✅ — model user interaction with the system
     - The assignment requires this — show how users actually move through the system
     - Suggested: one comprehensive diagram covering the main booking flow with decision points, OR separate diagrams per major flow using [[Swimlanes]]
     - Flows to cover:
@@ -285,64 +177,8 @@ OpeningHours "0.." --> Appointment : controls
         2. Payment registration
         3. Revisor lookup (date input → fetch appointments → sort → display)
     - Export → `sysdev/diagrams/activity-diagram.png`
-```mermaid
----
 
-title: Booking creation flow
 
----
-
-flowchart TD
-
-    subgraph User["Harry / Harriet"]
-
-        A([Start])
-
-        B[Open booking menu]
-
-        C[Enter requested date]
-
-        I[Select time slot]
-
-        J[Enter customer name and phone]
-
-        K[Confirm booking]
-
-    end
-
-  
-  
-
-    subgraph System["System"]
-
-        D{Is date valid?\nMon-Fri, not closed}
-
-        E[Show error message]
-
-        F[Display available time slots]
-
-        G{Slots available?}
-
-        H[Inform user — no slots available]
-
-        L[Save appointment to file]
-
-        M[Show confirmation message]
-
-        Z([End])
-
-    end
-
-    A --> B --> C --> D
-
-    D -- No --> E --> C
-
-    D -- Yes --> F --> G
-
-    G -- No --> H --> Z
-
-    G -- Yes --> I --> J --> K --> L --> M --> Z
-```
 - [ ] **Package structure decision** ✅ — agree this now before anyone writes code
     
     ```
@@ -489,7 +325,7 @@ _Timebox: 1.5 hours. Output: Sprint 2 Backlog in Trello._
     - [ ] All [[User Stories]] with [[Acceptance Criteria]] for every implemented story ✅
     - [ ] All Trello screenshots collected ✅
     - [ ] [[Activity Diagrams]] exported and labelled ✅
-    - [ ] [[Domain Model]] exported ✅
+    - [ ] [[30 Knowledge Base/30 Computer Science concepts/Software Development/Modeling/Domain Model]] exported ✅
     - [ ] Class diagram exported ✅
 
 ---
@@ -525,7 +361,7 @@ Nice-to-haves in priority order — only tackle if core stories are all done:
 - [ ] **Password for financial access** (Harry + Revisor menu) — small, low-effort → [[FURPS+]] security ✅
 - [ ] **Closed day registration** — block bookings on holidays → [[INVEST]] "E" — estimate carefully, date arithmetic is tricky
 - [ ] **5-day availability view** — show next 5 working days if today is full → moderate complexity, time permitting
-- [ ] **Product add-ons** — add products to a completed appointment → [[Domain Model]] extension
+- [ ] **Product add-ons** — add products to a completed appointment → [[30 Knowledge Base/30 Computer Science concepts/Software Development/Modeling/Domain Model]] extension
 
 **Mandatory code quality pass — DoD for every story:**
 
@@ -569,7 +405,7 @@ _Reference: [[Sprint Review]], [[Sprint Retrospective]], [[Sprint Rituals]]_
     3. [[User Stories]] + [[Acceptance Criteria]]
     4. Trello screenshots (Product Backlog · Sprint 1 Backlog · Sprint 2 Backlog)
     5. [[Activity Diagrams]]
-    6. [[Domain Model]]
+    6. [[30 Knowledge Base/30 Computer Science concepts/Software Development/Modeling/Domain Model]]
     7. [[UML Class Diagrams|Class Diagram]]
     
     - → Push `SYS_rapport.pdf` to **GitHub repo root**
@@ -603,7 +439,7 @@ _Reference: [[Sprint Review]], [[Sprint Retrospective]], [[Sprint Rituals]]_
 - [ ] Agree presentation structure:
     1. **Case intro** — who is Harry, what problem are we solving?
     2. **ITB** ✅: Interessentanalyse (stakeholder map) → Risikoanalyse → Risikoplan
-    3. **SYS** ✅: [[Domain Model]] → [[Activity Diagrams]] → [[UML Class Diagrams|Class Diagram]]
+    3. **SYS** ✅: [[30 Knowledge Base/30 Computer Science concepts/Software Development/Modeling/Domain Model]] → [[Activity Diagrams]] → [[UML Class Diagrams|Class Diagram]]
     4. **PRG** ✅: Live demo of the running system → key code walkthrough
         - Show [[Inheritance]] / [[Polymorphism]] in context
         - Show [[File IO]] save/reload
@@ -629,7 +465,7 @@ _Reference: [[Sprint Review]], [[Sprint Retrospective]], [[Sprint Rituals]]_
 |**Scrum process**|[[Scrum]], [[Sprint Planning]], [[Daily Scrum]], [[Sprint Review]], [[Sprint Retrospective]], [[Sprint Rituals]], [[Product Backlog]], [[Sprint Backlog]]|
 |**Backlog & stories**|[[User Stories]], [[INVEST]], [[Acceptance Criteria]], [[Backlog Prioritization (WSJF)]], [[Definition of Done]]|
 |**ITB frameworks**|[[Power-Interest Matrix & Engagement]], [[Stakeholder Analysis]], [[Risk Management Framework]], [[Risk Log & Monitoring]], [[Mission & Vision Statements]], [[SWOT Analysis]], [[RACI Framework]], [[Gatekeeper]]|
-|**SYS artefacts**|[[Domain Model]], [[Activity Diagrams]], [[Swimlanes]], [[UML Class Diagrams]], [[FURPS+]], [[Use Cases]], [[GRASP]], [[Low Coupling]], [[High Cohesion]], [[Polymorphism]]|
+|**SYS artefacts**|[[30 Knowledge Base/30 Computer Science concepts/Software Development/Modeling/Domain Model]], [[Activity Diagrams]], [[Swimlanes]], [[UML Class Diagrams]], [[FURPS+]], [[Use Cases]], [[GRASP]], [[Low Coupling]], [[High Cohesion]], [[Polymorphism]]|
 |**PRG concepts**|[[Encapsulation]], [[Inheritance]], [[Abstract Class]], [[Interface]], [[Polymorphism]], [[Constructor Overloading]], [[toString Method]], [[equals Method]], [[Enums]], [[Exception Handling]], [[Custom Exceptions]], [[Checked vs Unchecked Exceptions]], [[File IO]], [[CSV Format]], [[Array]], [[ArrayList]], [[Comparable]], [[Comparator]], [[Sorting]], [[Collections Class]], [[Static vs Instance]], [[Packages]], [[Scanner Class]]|
 |**Design patterns**|Facade (`AppointmentRepository` hides file logic), Strategy (`Comparator` implementations for sort), Observer (payment → revisor update)|
 |**Version control**|[[Version Control]], [[Merge Conflicts]]|
