@@ -1,5 +1,10 @@
 package ui;
+import model.appointments.Appointment;
+import service.FileStorage;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AccountantMenu {
@@ -46,6 +51,14 @@ public class AccountantMenu {
     private void lookupByDate(){
         System.out.println("Enter a date (YYYY-MM-DD");
         LocalDate date = LocalDate.parse(scanner.nextLine());
+
+        List<Appointment> dateList = FileStorage.getAppointsmentByDate();
+
+
+
+
+
+
 
 
 
