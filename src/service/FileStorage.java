@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FileStorage {
     ArrayList<Appointment> appointments = new ArrayList<>();
-    ArrayList<ClosedDays> closedDays = new ArrayList<>();
+    //ArrayList<ClosedDays> closedDays = new ArrayList<>();
 
     public static void loadFile(){}
     public static void saveFile(){}
@@ -19,7 +19,7 @@ public class FileStorage {
     public static List<Appointment> getAppointsmentByDate(){return null;}
     public static boolean isSlotAvailable(LocalDate date, TimeSlot slot){return false;}
     public static void registerPayment(int id, Payment payment){};
-    public static void addClosedDays(ClosedDays closedDay){};
+    //public static void addClosedDays(ClosedDays closedDay){};
     public static boolean isOpenDay(){return false;}
 
 }
