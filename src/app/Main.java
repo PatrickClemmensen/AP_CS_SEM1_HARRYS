@@ -1,22 +1,31 @@
 package app;
 
-import model.roles.Accountant;
-import model.roles.Assistant;
-import model.roles.Owner;
-import model.roles.User;
+import model.appointments.Appointment;
+import model.appointments.TimeSlot;
+import model.roles.*;
+import service.FileStorage;
 import ui.AccountantMenu;
 import ui.AssistantMenu;
 import ui.OwnerMenu;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        User currentUser = selectRole();
-        routeToMenu(currentUser);
+        ArrayList<Appointment> test = new ArrayList<>();
+        test.add(new Appointment(0, LocalDate.parse("2026-04-01"), new TimeSlot(LocalTime.parse("14:45"),LocalTime.parse("15:00")),new Customer("Aniko","1")));
+        test.add(new Appointment(1, LocalDate.parse("2026-04-01"), new TimeSlot(LocalTime.parse("14:45"),LocalTime.parse("15:00")),new Customer("Nick","2")));
+        for(Appointment a : test){
+            FileStorage.addAppointment(a);
+        }
+        FileStorage.saveFile();
+        //User currentUser = selectRole();
+        //routeToMenu(currentUser);
     }
 
     private static User selectRole(){

@@ -20,6 +20,7 @@ public class Appointment {
         this.date = date;
         this.timeslot = timeslot;
         this.customer = customer;
+        this.status = AppointmentStatus.BOOKED;
     }
 
 

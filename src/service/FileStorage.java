@@ -29,7 +29,9 @@ public class FileStorage {
             System.out.println("Error saving appointments: " + e.getMessage());
         }
     }
-    public static void addAppointment(Appointment appointment){}
+    public static void addAppointment(Appointment appointment){
+        appointments.add(appointment);
+    }
     public static void deleteAppointment(int id){}
     public static List<Appointment> getAllAppointments(){return null;}
     public static List<Appointment> getAppointsmentByDate(){return null;}
@@ -78,4 +80,6 @@ public class FileStorage {
 
         );
     }
+
+
 }
