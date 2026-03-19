@@ -9,8 +9,6 @@ import ui.AssistantMenu;
 import ui.OwnerMenu;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
-
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -19,11 +17,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         FileStorage.loadFile();
-        ArrayList<Appointment> test = FileStorage.getAllAppointments();
-        FileStorage.addAppointment(new Appointment(LocalDate.parse("2026-04-01"), new TimeSlot(LocalTime.parse("14:45"),LocalTime.parse("15:00")),new Customer("Aniko","1")));
-
-        //User currentUser = selectRole();
-        //routeToMenu(currentUser);
+        User currentUser = selectRole();
+        routeToMenu(currentUser);
     }
 
     private static User selectRole(){
@@ -46,7 +41,7 @@ public class Main {
         if(user instanceof Owner){
             new OwnerMenu();
         }else if (user instanceof Assistant){
-            new AssistantMenu();
+            new AssistantMenu().show();
         }else if (user instanceof Accountant){
             new AccountantMenu();
         }
