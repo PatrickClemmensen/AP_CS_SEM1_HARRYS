@@ -10,6 +10,7 @@ import ui.OwnerMenu;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -17,13 +18,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Appointment> test = new ArrayList<>();
-        test.add(new Appointment(0, LocalDate.parse("2026-04-01"), new TimeSlot(LocalTime.parse("14:45"),LocalTime.parse("15:00")),new Customer("Aniko","1")));
-        test.add(new Appointment(1, LocalDate.parse("2026-04-01"), new TimeSlot(LocalTime.parse("14:45"),LocalTime.parse("15:00")),new Customer("Nick","2")));
-        for(Appointment a : test){
-            FileStorage.addAppointment(a);
-        }
-        FileStorage.saveFile();
+        FileStorage.loadFile();
+        ArrayList<Appointment> test = FileStorage.getAllAppointments();
+        FileStorage.addAppointment(new Appointment(LocalDate.parse("2026-04-01"), new TimeSlot(LocalTime.parse("14:45"),LocalTime.parse("15:00")),new Customer("Aniko","1")));
+
         //User currentUser = selectRole();
         //routeToMenu(currentUser);
     }

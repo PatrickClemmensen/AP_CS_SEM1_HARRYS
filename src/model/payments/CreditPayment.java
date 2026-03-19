@@ -5,12 +5,16 @@ import java.time.LocalDate;
 public class CreditPayment extends Payment {
     private boolean isSettled;
 
-    public CreditPayment(LocalDate date, double price, boolean isSettled) {
-        super(date, price);
-        this.isSettled = isSettled;
+    public CreditPayment(LocalDate date) {
+        super(date);
+        isSettled = false;
     }
 
     public boolean isSettled() {
         return isSettled;
+    }
+
+    public void setSettled(boolean settled){
+        this.isSettled = settled;
     }
 }
