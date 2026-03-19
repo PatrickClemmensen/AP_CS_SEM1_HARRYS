@@ -52,7 +52,7 @@ public class AccountantMenu {
         System.out.println("Enter a date (YYYY-MM-DD");
         LocalDate date = LocalDate.parse(scanner.nextLine());
 
-        List<Appointment> dateList = FileStorage.getAppointsmentByDate();
+        //List<Appointment> dateList = FileStorage.getAppointsmentByDate();
 
 
 
