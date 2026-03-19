@@ -20,7 +20,7 @@ public class InputValidator {
      *         <li>Must be a weekday (Monday - Friday></li>
      *     </ul>
      * </p>
-     * @param input
+     * @param input - date string
      * @return a {@link LocalDate} representing the validated date
      * @throws InvalidDateException if the input cannot be parsed, is in hte past, or falls on a weekend.
      */
