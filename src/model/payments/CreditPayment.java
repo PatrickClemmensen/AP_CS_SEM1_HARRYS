@@ -10,4 +10,7 @@ public class CreditPayment extends Payment {
         this.isSettled = isSettled;
     }
 
+    public boolean isSettled() {
+        return isSettled;
+    }
 }

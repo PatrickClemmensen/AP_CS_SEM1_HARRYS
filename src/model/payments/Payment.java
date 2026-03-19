@@ -11,22 +11,22 @@ public abstract class Payment {
 
     public Payment(LocalDate paymentDate, double price) {
         this.paymentDate = paymentDate;
-        this.products = new ArrayList<>;
+        this.products = new ArrayList<>();
     }
 
     public ArrayList<Product> getProducts() {
-        return null
+        return null;
     }
 
     public void addProduct() {
     }
 
     public double getTotalAmount() {
-        return null
+        return 0.0;
     }
 
     public LocalDate getPaymentDate() {
-        return paymentDate
+        return this.paymentDate;
     }
 
 
