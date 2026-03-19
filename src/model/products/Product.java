@@ -1,5 +1,16 @@
 package model.products;
 
+/**
+ * Enum of products in Harry's.
+ * <p>
+ *     Each product has the following attributes:
+ *     <ul>
+ *         <li>String name - name of the product</li>
+ *         <li>double price - price of the product</li>
+ *         <li>{@link Category} enum - describes if product is a service or retail-product</li>
+ *     </ul>
+ * </p>
+ */
 public enum Product {
 
     // Services
@@ -26,8 +37,6 @@ public enum Product {
         return category;
     }
 
-    public enum Category {
-        SERVICE,
-        RETAIL
-    }
+
+
 }
