@@ -12,17 +12,16 @@ public class InputValidator {
 
     /**
      * Validates a date string and converts it to a LocalDate.
-     * <p>
-     *     Must have the following criteria:
+     * <p> Must have the following criteria:
      *     <ul>
      *         <li>Must be in the format YYYY-MM-DD</li>
      *         <li>Must not be in the past</li>
-     *         <li>Must be a weekday (Monday - Friday></li>
+     *         <li>Must be a weekday (Monday - Friday)</li>
      *     </ul>
      * </p>
      * @param input  date string
      * @return a {@link LocalDate} representing the validated date
-     * @throws InvalidDateException if the input cannot be parsed, is in hte past, or falls on a weekend.
+     * @throws InvalidDateException if the input cannot be parsed, is in the past, or falls on a weekend.
      */
     public static LocalDate validateDate(String input){
         try {
