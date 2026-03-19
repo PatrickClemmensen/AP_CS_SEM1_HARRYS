@@ -7,6 +7,12 @@ public class ClosedDays {
     private LocalDate date;
     private boolean isOpen;
 
+    /**
+     * Creates a new ClosedDays entry for a specific date.
+     *
+     * @param date the date of this entry
+     * @param isOpen (boolean true) if the salon is open this day, (boolean false) if the salon is closed
+     */
     public ClosedDays(LocalDate date, boolean isOpen){
         this.date = date;
         this.isOpen = isOpen;

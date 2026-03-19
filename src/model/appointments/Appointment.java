@@ -15,12 +15,14 @@ public class Appointment {
     private Payment payment;
 
 
-    public Appointment(LocalDate date, TimeSlot timeslot, Customer customer){
+    public Appointment(int id, LocalDate date, TimeSlot timeslot, Customer customer){
+        this.id = id;
         this.date = date;
         this.timeslot = timeslot;
         this.customer = customer;
         this.status = AppointmentStatus.BOOKED;
     }
+
 
 
     // Getters
@@ -56,10 +58,6 @@ public class Appointment {
 
     public void setPayment(Payment payment){
         this.payment = payment;
-    }
-
-    public void setId(int id){
-        this.id = id;
     }
 
 
