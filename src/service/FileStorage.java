@@ -5,24 +5,23 @@ import model.payments.CashPayment;
 import model.payments.CreditPayment;
 import model.payments.Payment;
 import model.roles.Customer;
+import util.exceptions.SlotUnavailableException;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.time.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class FileStorage {
     private static ArrayList<Appointment> appointments = new ArrayList<>();
     private static ArrayList<ClosedDays> closedDays = new ArrayList<>();
     private static final String APPOINTMENTS_FILE = "data/appointments.csv";
-    private static final String OPENING_HOURS_FILE = "data/openinghours.csv";
+    private static final String CLOSED_DAYS_FILE = "data/openinghours.csv";
     private static int nextId = 1;
 
     public static void loadFile(){
-        appointments = new ArrayList<>();
         File file = new File(APPOINTMENTS_FILE);
 
         if(!file.exists()){
@@ -58,6 +57,49 @@ public class FileStorage {
             System.out.println("Error saving appointments: " + e.getMessage());
         }
     }
+
+    public static void saveClosedDays() {
+        createDataFolder();
+        try (PrintStream writer = new PrintStream(CLOSED_DAYS_FILE)) {
+            for (ClosedDays cd : closedDays) {
+                writer.println(cd.getDate() + "," + cd.isOpen());
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving opening hours: " + e.getMessage());
+        }
+    }
+
+    public static void loadClosedDays() {
+        File file = new File(CLOSED_DAYS_FILE);
+        if (!file.exists()) return;
+
+        try (Scanner reader = new Scanner(file)) {
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine().trim();
+                if (!line.isEmpty()) {
+                    String[] fields = line.split(",", -1);
+                    LocalDate date = LocalDate.parse(fields[0]);
+                    boolean isOpen = Boolean.parseBoolean(fields[1]);
+                    closedDays.add(new ClosedDays(date, isOpen));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading opening hours: " + e.getMessage());
+        }
+    }
+
+    public static void addClosingDays(ClosedDays cd){
+        closedDays.add(cd);
+        saveClosedDays();
+    }
+    public static boolean isClosedDay(LocalDate date) {
+        return closedDays.stream()
+                .filter(oh -> oh.getDate().equals(date))
+                .map(ClosedDays::isOpen)
+                .findFirst()
+                .orElse(true);
+    }
+
     public static void addAppointment(Appointment appointment){
         appointment.setId(nextId);
         appointments.add(appointment);
@@ -65,11 +107,58 @@ public class FileStorage {
     }
     public static void deleteAppointment(int id){}
     public static ArrayList<Appointment> getAllAppointments(){return new ArrayList<>(appointments);}
-    public static List<Appointment> getAppointsmentByDate(){return null;}
-    public static boolean isSlotAvailable(LocalDate date, TimeSlot slot){return false;}
+
+    public static ArrayList<Appointment> getAppointmentsByDate(LocalDate date) {
+        ArrayList<Appointment> result = new ArrayList<>();
+        for (Appointment a : appointments) {
+            if (a.getDate().equals(date)) {
+                result.add(a);
+            }
+        }
+        return result;
+    }
+
+    public static ArrayList<TimeSlot> getAvailableSlots(LocalDate date) {
+        String[] allSlots = {
+                "10:00", "11:00", "12:00", "13:00",
+                "14:00", "15:00", "16:00", "17:00"
+        };
+
+        ArrayList<TimeSlot> availableSlots = new ArrayList<>();
+
+        for (String slot : allSlots) {
+            LocalTime startTime = LocalTime.parse(slot);
+            LocalTime endTime = startTime.plusHours(1);
+            TimeSlot timeSlot = new TimeSlot(startTime, endTime);
+
+            boolean isTaken = false;
+            for (Appointment a : appointments) {
+                if (a.getDate().equals(date) &&
+                        a.getTimeslot().getStartTime().equals(startTime)) {
+                    isTaken = true;
+                    break;
+                }
+            }
+
+            if (!isTaken) {
+                availableSlots.add(timeSlot);
+            }
+        }
+
+        return availableSlots;
+    }
+
+    public static boolean isSlotAvailable(LocalDate date, TimeSlot slot) {
+        ArrayList<TimeSlot> available = getAvailableSlots(date);
+        for (TimeSlot ts : available) {
+            if (ts.getStartTime().equals(slot.getStartTime())) {
+                return true;
+            }
+        }
+        throw new SlotUnavailableException(
+                "The slot " + slot.getStartTime() + " on " + date + " is not available.");
+    }
     public static void registerPayment(int id, Payment payment){};
-    //public static void addClosedDays(ClosedDays closedDay){};
-    public static boolean isOpenDay(){return false;}
 
 
     //Helpers

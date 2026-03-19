@@ -1,7 +1,5 @@
 package app;
 
-import model.appointments.Appointment;
-import model.appointments.TimeSlot;
 import model.roles.*;
 import service.FileStorage;
 import ui.AccountantMenu;
@@ -9,16 +7,13 @@ import ui.AssistantMenu;
 import ui.OwnerMenu;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         FileStorage.loadFile();
-        User currentUser = selectRole();
-        routeToMenu(currentUser);
+            User currentUser = selectRole();
+            routeToMenu(currentUser);
     }
 
     private static User selectRole(){
@@ -28,7 +23,7 @@ public class Main {
         System.out.println("2. Assistant");
         System.out.println("3. Accountant");
 
-        int choice = InputValidator.validateMenuChoice(scanner.nextLine(),1,3);
+        int choice = InputValidator.validateMenuChoice(scanner.nextLine(),0,3);
         return switch(choice){
             case 1 -> new Owner("Harry");
             case 2 -> new Assistant("Harriet");

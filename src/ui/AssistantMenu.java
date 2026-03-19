@@ -8,9 +8,11 @@ import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AssistantMenu {
@@ -69,14 +71,34 @@ public class AssistantMenu {
             }
         }
 
-        System.out.print("Select a start time for the booking (HH:MM): ");
-        LocalTime startTime = LocalTime.parse(scanner.nextLine());
+        // Step 2 — show available slots and pick one
+        ArrayList<TimeSlot> availableSlots = FileStorage.getAvailableSlots(date);
 
-        System.out.print("Select an end time for the booking (HH:MM): ");
-        LocalTime endTime = LocalTime.parse(scanner.nextLine());
+        if (availableSlots.isEmpty()) {
+            System.out.println("No available slots on " + date + ".");
+            return;
+        }
+
+        System.out.println("\nAvailable slots on " + date + ":");
+        for (int i = 0; i < availableSlots.size(); i++) {
+            System.out.println((i + 1) + ". " + availableSlots.get(i).getStartTime());
+        }
+
+        TimeSlot selectedSlot = null;
+        while (true) {
+            System.out.print("Select slot (1-" + availableSlots.size() + "): ");
+            try {
+                int choice = InputValidator.validateMenuChoice(
+                        scanner.nextLine(), 1, availableSlots.size());
+                selectedSlot = availableSlots.get(choice - 1);
+                break;
+            } catch (InvalidInputException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
 
         Customer customer = new Customer(name, phoneNumber);
-        FileStorage.addAppointment(new Appointment(date, new TimeSlot(startTime, endTime), customer));
+        FileStorage.addAppointment(new Appointment(date, selectedSlot, customer));
 
         System.out.print("Booking added!\nType 'yes' to add another booking, type 'no' to return to the Assistant Menu.");
         String answer = scanner.nextLine();
