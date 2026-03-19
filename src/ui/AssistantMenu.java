@@ -3,6 +3,7 @@ package ui;
 import model.appointments.Appointment;
 import model.appointments.TimeSlot;
 import model.roles.Customer;
+import model.roles.User;
 import service.FileStorage;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
@@ -38,6 +39,9 @@ public class AssistantMenu {
                 case 3:
                     viewAppointments();
                     break;
+                case 4:
+                    returnToMain();
+                    break;
 
             }
         }
@@ -49,6 +53,7 @@ public class AssistantMenu {
         System.out.println("1. Create a new booking");
         System.out.println("2. Delete an existing booking");
         System.out.println("3. View all appointments");
+        System.out.println("4. Return to Main Menu");
     }
 
     private void createBooking() {
@@ -59,7 +64,7 @@ public class AssistantMenu {
         String phoneNumber = scanner.nextLine();
 
         LocalDate date = null;
-        while(true) {
+        while (true) {
             System.out.print("Select a date for the booking (YYYY-MM-DD): ");
             try {
                 date = InputValidator.validateDate(scanner.nextLine());
@@ -78,13 +83,8 @@ public class AssistantMenu {
         Customer customer = new Customer(name, phoneNumber);
         FileStorage.addAppointment(new Appointment(date, new TimeSlot(startTime, endTime), customer));
 
-        System.out.print("Booking added!\nType 'yes' to add another booking, type 'no' to return to the Assistant Menu.");
-        String answer = scanner.nextLine();
-        if (answer.equals("yes")) {
-            createBooking();
-        } else if (answer.equals("no")) {
-            printMenu();
-        }
+        System.out.print("Booking added!");
+
     }
 
     private void deleteBooking() {
@@ -95,7 +95,8 @@ public class AssistantMenu {
 
     }
 
-
+    private void returnToMain() {
+    }
 }
 
 
