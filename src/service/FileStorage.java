@@ -1,7 +1,8 @@
 package service;
 
-import model.appointments.Appointment;
+import model.appointments.*;
 
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,6 @@ public class FileStorage {
     public static void loadFile(){}
     public static void saveFile(){}
     public static List<Appointment> getAllAppointments(){return null;}
-    public static boolean isSlotAvailable(){return false;}
+    public static boolean isSlotAvailable(LocalDate date, TimeSlot slot){return false;}
 
 }

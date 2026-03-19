@@ -1,4 +1,8 @@
 package model.roles;
 
-public class Accountant {
+public class Accountant extends User {
+
+    public Accountant(String name) {
+        super(name);
+    }
 }
