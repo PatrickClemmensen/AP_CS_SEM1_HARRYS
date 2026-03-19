@@ -38,5 +38,17 @@ public class InputValidator {
         }
     }
 
+    public static int validateMenuChoice(String input, int min, int max){
+        try{
+            int choice = Integer.parseInt(input);
+            if (choice < min || choice > max){
+                throw new InvalidInputException("Please enter a number between "+ min + " and "+ max +".");
+            }
+            return choice;
+        }catch(NumberFormatException e){
+            throw new InvalidInputException("Invalid input. Please enter a number");
+        }
+    }
+
 
 }
