@@ -5,6 +5,7 @@ import model.appointments.Appointment;
 import model.appointments.TimeSlot;
 import model.roles.Customer;
 import service.FileStorage;
+import util.colors.Colors;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
@@ -56,14 +57,14 @@ public class OwnerMenu {
     }
 
     private void printMenu() {
-        System.out.println("\nWelcome to the Salon Owner Menu");
+        System.out.println(Colors.MENUHEADER + "\nWelcome to the Salon Owner Menu" + Colors.RESET);
         System.out.println("------------------------------------------");
-        System.out.println("1. Create a new booking");
+        System.out.println(Colors.MENUOPTION + "1. Create a new booking");
         System.out.println("2. Delete an existing booking");
         System.out.println("3. View all appointments");
         System.out.println("4. Register payment");
         System.out.println("5. Register a closed business day");
-        System.out.println("6. Return to Main Menu");
+        System.out.println("6. Return to Main Menu" + Colors.RESET);
     }
 
     private void createBooking() {
@@ -113,7 +114,7 @@ public class OwnerMenu {
         Customer customer = new Customer(name, phoneNumber);
         FileStorage.addAppointment(new Appointment(date, selectedSlot, customer));
 
-        System.out.print("Booking added!");
+        System.out.print(Colors.CONFIRMATION + "Booking added!" + Colors.RESET);
 
     }
 
@@ -157,7 +158,7 @@ public class OwnerMenu {
         }
 
         FileStorage.deleteAppointment(selectedAppointment.getId());
-        System.out.println("Booking deleted successfully.");
+        System.out.println(Colors.CONFIRMATION + "Booking deleted successfully." + Colors.RESET);
     }
 
     private void viewAppointments() {
