@@ -1,6 +1,8 @@
 package ui;
 import model.appointments.Appointment;
 import service.FileStorage;
+import util.exceptions.InvalidDateException;
+import util.inputvalidation.InputValidator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,10 +51,31 @@ public class AccountantMenu {
     }
 
     private void lookupByDate(){
-        System.out.println("Enter a date (YYYY-MM-DD");
-        LocalDate date = LocalDate.parse(scanner.nextLine());
+        LocalDate date = null;
+        while (true) {
+            System.out.print("Select a date (YYYY-MM-DD): ");
+            try {
+                date = InputValidator.validateDate(scanner.nextLine());
+                break;
+            } catch (InvalidDateException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
 
-        //List<Appointment> dateList = FileStorage.getAppointsmentByDate();
+        ArrayList<Appointment> dateList = FileStorage.getAppointmentsByDate(date);
+
+        if (dateList.isEmpty()){
+            System.out.println("No appointments found on " + date + ".");
+            return;
+        }
+        System.out.println("\nAppointments on " + date + ":");
+        for (int i = 0; i < dateList.size(); i++){
+            System.out.println((i + 1) + ". "
+                    + dateList.get(i).getCustomer().getName()
+                    + " | " + dateList.get(i).getTimeslot().getStartTime());
+        }
+
+
 
 
 
