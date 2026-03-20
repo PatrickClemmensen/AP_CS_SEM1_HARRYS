@@ -17,7 +17,6 @@ import java.util.Scanner;
 public class OwnerMenu {
 
     private Scanner scanner = new Scanner(System.in);
-    AssistantMenu a = new AssistantMenu();
 
     public OwnerMenu() {
 
