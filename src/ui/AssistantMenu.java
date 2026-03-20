@@ -16,6 +16,17 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Menu flow for the assistant role.
+ * <p>
+ *     An assistant can do the following:
+ *     <ul>
+ *        <li>Create appointment</li>
+ *        <li>Delete appointment</li>
+ *        <li>View appointments</li>
+ *     </ul>
+ * </p>
+ */
 public class AssistantMenu {
     private Scanner scanner = new Scanner(System.in);
 

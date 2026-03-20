@@ -13,7 +13,16 @@ public class AccountantMenu {
 
     private Scanner scanner = new Scanner(System.in);
 
-
+    /**
+     * Menu flow for the assistant role.
+     * <p>
+     *     An accountant can do the following:
+     *     <ul>
+     *        <li>View appointments by date</li>
+     *        <li>sort appointments by name or payment amount</li>
+     *     </ul>
+     * </p>
+     */
     public AccountantMenu(){
     }
 

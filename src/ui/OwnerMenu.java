@@ -15,7 +15,19 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * Menu flow for the assistant role.
+ * <p>
+ *     An Owner can do the following:
+ *     <ul>
+ *        <li>Create appointment</li>
+ *        <li>Delete appointment</li>
+ *        <li>View appointments</li>
+ *        <li>Register a payment to a specific appointment</li>
+ *        <li>Register closed days for the salon</li>
+ *     </ul>
+ * </p>
+ */
 public class OwnerMenu {
 
     private Scanner scanner = new Scanner(System.in);
