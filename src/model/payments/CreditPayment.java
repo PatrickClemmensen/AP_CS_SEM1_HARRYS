@@ -5,9 +5,10 @@ import java.time.LocalDate;
 public class CreditPayment extends Payment {
     private boolean isSettled;
 
-    public CreditPayment(LocalDate date) {
+    public CreditPayment(double totalAmount, LocalDate date) {
         super(date);
         isSettled = false;
+        setTotalAmount(totalAmount);
     }
 
     public boolean isSettled() {

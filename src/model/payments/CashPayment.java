@@ -4,8 +4,9 @@ import java.time.LocalDate;
 
 public class CashPayment extends Payment {
 
-    public CashPayment(LocalDate date) {
+    public CashPayment(double totalAmount, LocalDate date) {
         super(date);
+        setTotalAmount(totalAmount);
     }
 
 

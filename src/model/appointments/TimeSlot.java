@@ -39,5 +39,9 @@ public class TimeSlot {
         return endTime;
     }
 
+    @Override
+    public String toString() {
+        return getStartTime() + " - " +getEndTime();
+    }
 }
 

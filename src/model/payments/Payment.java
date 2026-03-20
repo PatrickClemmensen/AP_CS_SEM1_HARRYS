@@ -26,9 +26,16 @@ public abstract class Payment {
     public double getTotalAmount() {
         return 0.0;
     }
-    public void setTotalAmount(double amount){
-        this.totalAmount = amount;
+
+    /**
+     * @deprecated Temporary setter used during CSV deserialization.
+     * Will be removed when getTotalAmount() calculates from List<Product>.
+     */
+    @Deprecated
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
+
     public LocalDate getPaymentDate() {
         return this.paymentDate;
     }

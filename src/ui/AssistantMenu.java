@@ -1,5 +1,6 @@
 package ui;
 
+import app.Main;
 import model.appointments.Appointment;
 import model.appointments.TimeSlot;
 import model.roles.Customer;
@@ -42,7 +43,7 @@ public class AssistantMenu {
                     viewAppointments();
                     break;
                 case 4:
-                    returnToMain();
+                    Main.selectRole();
                     break;
 
             }
@@ -76,22 +77,25 @@ public class AssistantMenu {
             }
         }
 
-        // Step 2 — show available slots and pick one
+        //show available slots and pick one
         ArrayList<TimeSlot> availableSlots = FileStorage.getAvailableSlots(date);
 
-        if (availableSlots.isEmpty()) {
+        if (availableSlots.isEmpty() | FileStorage.isClosedDay(date)) {
             System.out.println("No available slots on " + date + ".");
             return;
         }
 
         System.out.println("\nAvailable slots on " + date + ":");
         for (int i = 0; i < availableSlots.size(); i++) {
-            System.out.println((i + 1) + ". " + availableSlots.get(i).getStartTime());
+            if(i % 3 == 0){
+                System.out.println();
+            }
+            System.out.print((i + 1) + ". " + availableSlots.get(i).getStartTime()+" ");
         }
 
         TimeSlot selectedSlot = null;
         while (true) {
-            System.out.print("Select slot (1-" + availableSlots.size() + "): ");
+            System.out.println("Select slot (1-" + availableSlots.size() + "): ");
             try {
                 int choice = InputValidator.validateMenuChoice(
                         scanner.nextLine(), 1, availableSlots.size());
@@ -114,11 +118,11 @@ public class AssistantMenu {
     }
 
     private void viewAppointments() {
-
+        for(Appointment a : FileStorage.getAllAppointments()){
+            System.out.println(a);
+        }
     }
 
-    private void returnToMain() {
-    }
 }
 
 

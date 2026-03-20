@@ -1,5 +1,6 @@
 package app;
 
+import model.appointments.ClosedDays;
 import model.roles.*;
 import service.FileStorage;
 import ui.AccountantMenu;
@@ -7,16 +8,20 @@ import ui.AssistantMenu;
 import ui.OwnerMenu;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
+
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        FileStorage.addClosedDay(new ClosedDays(LocalDate.parse("2026-04-03"), false));
         FileStorage.loadFile();
-            User currentUser = selectRole();
-            routeToMenu(currentUser);
+        FileStorage.loadClosedDays();
+        User currentUser = selectRole();
+        routeToMenu(currentUser);
     }
 
-    private static User selectRole(){
+    public static User selectRole(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Who are you?");
         System.out.println("1. Salon owner");
@@ -34,11 +39,11 @@ public class Main {
 
     private static void routeToMenu(User user){
         if(user instanceof Owner){
-            new OwnerMenu();
+            new OwnerMenu().show();
         }else if (user instanceof Assistant){
             new AssistantMenu().show();
         }else if (user instanceof Accountant){
-            new AccountantMenu();
+            new AccountantMenu().show();
         }
     }
 }
