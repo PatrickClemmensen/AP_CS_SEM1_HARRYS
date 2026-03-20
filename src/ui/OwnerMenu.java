@@ -1,5 +1,6 @@
 package ui;
 
+import app.Main;
 import model.appointments.Appointment;
 import model.appointments.TimeSlot;
 import model.roles.Customer;
@@ -32,19 +33,22 @@ public class OwnerMenu {
 
             switch (choice) {
                 case 1:
-                   // createBooking();
+                   createBooking();
                     break;
                 case 2:
-                    //deleteBooking();
+                    deleteBooking();
                     break;
                 case 3:
-                    //viewAppointments();
+                    viewAppointments();
                     break;
                 case 4:
-                    registerPayment();
+                    //registerPayment();
                     break;
                 case 5:
-                    registerClosedDays();
+                    //registerClosedDays();
+                    break;
+                case 6:
+                    Main.selectRole();
                     break;
 
             }
@@ -52,13 +56,13 @@ public class OwnerMenu {
     }
 
     private void printMenu() {
-        System.out.println("\nWelcome to the Owners Menu");
+        System.out.println("\nWelcome to the Salon Owner Menu");
         System.out.println("------------------------------------------");
         System.out.println("1. Create a new booking");
         System.out.println("2. Delete an existing booking");
         System.out.println("3. View all appointments");
-        System.out.println("4. Register payments");
-        System.out.println("5. Register calender");
+        System.out.println("4. Register payment");
+        System.out.println("5. Register a closed business day");
         System.out.println("6. Return to Main Menu");
     }
 
@@ -114,24 +118,56 @@ public class OwnerMenu {
     }
 
     private void deleteBooking() {
+        LocalDate date = null;
+        while (true) {
+            System.out.print("Select a date (YYYY-MM-DD): ");
+            try {
+                date = InputValidator.validateDate(scanner.nextLine());
+                break;
+            } catch (InvalidDateException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
 
+        ArrayList<Appointment> appointments = FileStorage.getAppointmentsByDate(date);
+
+        if (appointments.isEmpty()) {
+            System.out.println("No appointments found on " + date + ".");
+            return;
+        }
+
+        System.out.println("\nAppointments on " + date + ":");
+        for (int i = 0; i < appointments.size(); i++) {
+            System.out.println((i + 1) + ". "
+                    + appointments.get(i).getCustomer().getName()
+                    + " | " + appointments.get(i).getTimeslot().getStartTime());
+        }
+
+        Appointment selectedAppointment = null;
+        while (true) {
+            System.out.print("Select appointment to delete (1-" + appointments.size() + "): ");
+            try {
+                int choice = InputValidator.validateMenuChoice(
+                        scanner.nextLine(), 1, appointments.size());
+                selectedAppointment = appointments.get(choice - 1);
+                break;
+            } catch (InvalidInputException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+        FileStorage.deleteAppointment(selectedAppointment.getId());
+        System.out.println("Booking deleted successfully.");
     }
 
     private void viewAppointments() {
+        for(Appointment a : FileStorage.getAllAppointments()){
+            System.out.println(a);
+    }
+
+    //private void registerPayment(){
 
     }
 
-    private void registerPayment(){
-
-    }
-
-    private void  registerClosedDays(){
-
-    }
-
-    private void returnToMain() {
-    }
-
-
-
+    //private void  registerClosedDays(){
 }

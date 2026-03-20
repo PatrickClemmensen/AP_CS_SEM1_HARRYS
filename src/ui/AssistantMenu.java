@@ -62,25 +62,25 @@ public class AssistantMenu {
     private void createBooking() {
         String name = null;
 
-        while(true){
-            System.out.print("Enter customer name: ");
-            try{
+        while (true) {
+            System.out.print("\nEnter customer name: ");
+            try {
                 name = InputValidator.validateName(scanner.nextLine());
                 break;
-            }catch (InvalidInputException e){
+            } catch (InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
 
         String phoneNumber = null;
 
-        while(true){
+        while (true) {
             System.out.print("Enter phone number of the customer: ");
-            try{
+            try {
                 phoneNumber = InputValidator.validatePhone(scanner.nextLine());
                 break;
-            }catch (InvalidInputException e){
-                System.out.println("Error: "+ e.getMessage());
+            } catch (InvalidInputException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
 
@@ -96,8 +96,8 @@ public class AssistantMenu {
             }
         }
 
-        if(FileStorage.isClosedDay(date)){
-            System.out.println("Salon is closed on "+date);
+        if (FileStorage.isClosedDay(date)) {
+            System.out.println("Salon is closed on " + date);
             return;
         }
         //show available slots and pick one
@@ -110,10 +110,10 @@ public class AssistantMenu {
 
         System.out.println("\nAvailable slots on " + date + ":");
         for (int i = 0; i < availableSlots.size(); i++) {
-            if(i % 3 == 0){
+            if (i % 3 == 0) {
                 System.out.println();
             }
-            System.out.print((i + 1) + ". " + availableSlots.get(i).getStartTime()+" ");
+            System.out.print((i + 1) + ". " + availableSlots.get(i).getStartTime() + " ");
         }
 
         TimeSlot selectedSlot = null;
@@ -180,10 +180,11 @@ public class AssistantMenu {
     }
 
     private void viewAppointments() {
-        for(Appointment a : FileStorage.getAllAppointments()){
+        for (Appointment a : FileStorage.getAllAppointments()) {
             System.out.println(a);
         }
-    }}
+    }
+}
 
 
 
