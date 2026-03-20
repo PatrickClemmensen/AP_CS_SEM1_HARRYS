@@ -4,15 +4,15 @@ import app.Main;
 import model.appointments.Appointment;
 import model.appointments.TimeSlot;
 import model.roles.Customer;
-import model.roles.User;
+
 import service.FileStorage;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
 
-import java.sql.Time;
+import java.io.File;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -60,11 +60,30 @@ public class AssistantMenu {
     }
 
     private void createBooking() {
-        System.out.print("\nEnter customer name: ");
-        String name = scanner.nextLine();
+        String name = null;
 
-        System.out.print("Enter phone number of the customer: ");
-        String phoneNumber = scanner.nextLine();
+        while(true){
+            System.out.print("Enter customer name: ");
+            try{
+                name = InputValidator.validateName(scanner.nextLine());
+                break;
+            }catch (InvalidInputException e){
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+        String phoneNumber = null;
+
+        while(true){
+            System.out.print("Enter phone number of the customer: ");
+            try{
+                phoneNumber = InputValidator.validatePhone(scanner.nextLine());
+                break;
+            }catch (InvalidInputException e){
+                System.out.println("Error: "+ e.getMessage());
+            }
+        }
+
 
         LocalDate date = null;
         while (true) {
@@ -77,10 +96,14 @@ public class AssistantMenu {
             }
         }
 
+        if(FileStorage.isClosedDay(date)){
+            System.out.println("Salon is closed on "+date);
+            return;
+        }
         //show available slots and pick one
         ArrayList<TimeSlot> availableSlots = FileStorage.getAvailableSlots(date);
 
-        if (availableSlots.isEmpty() | FileStorage.isClosedDay(date)) {
+        if (availableSlots.isEmpty()) {
             System.out.println("No available slots on " + date + ".");
             return;
         }
@@ -95,7 +118,7 @@ public class AssistantMenu {
 
         TimeSlot selectedSlot = null;
         while (true) {
-            System.out.println("Select slot (1-" + availableSlots.size() + "): ");
+            System.out.println("\nSelect slot (1-" + availableSlots.size() + "): ");
             try {
                 int choice = InputValidator.validateMenuChoice(
                         scanner.nextLine(), 1, availableSlots.size());
@@ -114,15 +137,54 @@ public class AssistantMenu {
     }
 
     private void deleteBooking() {
+        LocalDate date = null;
+        while (true) {
+            System.out.print("Select a date (YYYY-MM-DD): ");
+            try {
+                date = InputValidator.validateDate(scanner.nextLine());
+                break;
+            } catch (InvalidDateException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
 
+        ArrayList<Appointment> appointments = FileStorage.getAppointmentsByDate(date);
+
+        if (appointments.isEmpty()) {
+            System.out.println("No appointments found on " + date + ".");
+            return;
+        }
+
+        System.out.println("\nAppointments on " + date + ":");
+        for (int i = 0; i < appointments.size(); i++) {
+            System.out.println((i + 1) + ". "
+                    + appointments.get(i).getCustomer().getName()
+                    + " | " + appointments.get(i).getTimeslot().getStartTime());
+        }
+
+        Appointment selectedAppointment = null;
+        while (true) {
+            System.out.print("Select appointment to delete (1-" + appointments.size() + "): ");
+            try {
+                int choice = InputValidator.validateMenuChoice(
+                        scanner.nextLine(), 1, appointments.size());
+                selectedAppointment = appointments.get(choice - 1);
+                break;
+            } catch (InvalidInputException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+        FileStorage.deleteAppointment(selectedAppointment.getId());
+        System.out.println("Booking deleted successfully.");
     }
 
     private void viewAppointments() {
         for(Appointment a : FileStorage.getAllAppointments()){
             System.out.println(a);
         }
-    }
+    }}
 
-}
+
 
 

@@ -65,7 +65,7 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return getDate()+" : "+getCustomer() + " : " + getTimeslot();
+        return "["+getId()+"] "+getCustomer().getName() + "|"+getDate()+"|"+ getTimeslot().getStartTime();
     }
 }
 

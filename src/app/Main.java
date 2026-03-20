@@ -14,9 +14,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        FileStorage.addClosedDay(new ClosedDays(LocalDate.parse("2026-04-03"), false));
         FileStorage.loadFile();
-        FileStorage.loadClosedDays();
         User currentUser = selectRole();
         routeToMenu(currentUser);
     }

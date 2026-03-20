@@ -15,6 +15,18 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles all file persistence and in-memory data management for the system.
+ * Manages two data stores: appointments and closed days.
+ * All data is saved to CSV files immediately on every change and
+ * reloaded from file on startup.
+ *
+ * <p>Files used:</p>
+ * <ul>
+ *   <li>{@code data/appointments.csv} — all appointment and payment data</li>
+ *   <li>{@code data/closeddays.csv} — all registered closed days</li>
+ * </ul>
+ */
 public class FileStorage {
 
     private static ArrayList<Appointment> appointments = new ArrayList<>();
@@ -27,11 +39,18 @@ public class FileStorage {
     // LOAD
     // ─────────────────────────────────────────────
 
+    /**
+     * Loads all appointments from the CSV file into memory.
+     * If the file does not exist, an empty file is created.
+     * Automatically updates {@code nextId} to be higher than
+     * any existing appointment ID to prevent ID conflicts.
+     */
     public static void loadFile() {
         appointments = new ArrayList<>();
         File file = new File(APPOINTMENTS_FILE);
 
         if (!file.exists()) {
+            saveFile();
             return;
         }
 
@@ -57,6 +76,11 @@ public class FileStorage {
     // SAVE
     // ─────────────────────────────────────────────
 
+    /**
+     * Saves all appointments in memory to the CSV file.
+     * Overwrites the existing file on every call.
+     * Called automatically after every change to the appointments list.
+     */
     public static void saveFile() {
         createDataFolder();
         try (PrintStream writer = new PrintStream(APPOINTMENTS_FILE)) {
@@ -72,6 +96,11 @@ public class FileStorage {
     // CLOSED DAYS
     // ─────────────────────────────────────────────
 
+    /**
+     * Saves all closed days in memory to the CSV file.
+     * Overwrites the existing file on every call.
+     * Called automatically after every change to the closed days list.
+     */
     public static void saveClosedDays() {
         createDataFolder();
         try (PrintStream writer = new PrintStream(CLOSED_DAYS_FILE)) {
@@ -83,10 +112,17 @@ public class FileStorage {
         }
     }
 
+    /**
+     * Loads all closed days from the CSV file into memory.
+     * If the file does not exist, an empty file is created.
+     */
     public static void loadClosedDays() {
         closedDays = new ArrayList<>();
         File file = new File(CLOSED_DAYS_FILE);
-        if (!file.exists()) return;
+        if (!file.exists()) {
+            saveClosedDays();
+            return;
+        }
 
         try (Scanner reader = new Scanner(file)) {
             while (reader.hasNextLine()) {
@@ -103,13 +139,27 @@ public class FileStorage {
         }
     }
 
+    /**
+     * Adds a closed day to the list if it does not already exist,
+     * then saves to file.
+     *
+     * @param cd the {@link ClosedDays} object to register
+     */
     public static void addClosedDay(ClosedDays cd) {
-        if(!closedDays.contains(cd)){
+        if (!closedDays.contains(cd)) {
             closedDays.add(cd);
         }
         saveClosedDays();
     }
 
+    /**
+     * Checks whether a given date is registered as a closed day.
+     * Defaults to {@code false} (open) if no record exists for the date.
+     *
+     * @param date the date to check
+     * @return {@code true} if the salon is closed on that date,
+     *         {@code false} otherwise
+     */
     public static boolean isClosedDay(LocalDate date) {
         return closedDays.stream()
                 .filter(cd -> cd.getDate().equals(date))
@@ -122,24 +172,63 @@ public class FileStorage {
     // APPOINTMENT MANAGEMENT
     // ─────────────────────────────────────────────
 
+    /**
+     * Assigns a unique ID to the appointment, adds it to the
+     * in-memory list, and saves to file.
+     *
+     * @param appointment the {@link Appointment} to add
+     */
     public static void addAppointment(Appointment appointment) {
         appointment.setId(nextId++);
         appointments.add(appointment);
         saveFile();
     }
 
+    /**
+     * Removes the appointment with the given ID from the
+     * in-memory list and saves to file.
+     *
+     * @param id the ID of the appointment to delete
+     * @throws InvalidInputException if no appointment with the given ID exists
+     */
     public static void deleteAppointment(int id) {
-        // TODO — implement in Delete Booking story
+        Appointment toDelete = appointments.stream()
+                .filter(a -> a.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new InvalidInputException(
+                        "No appointment found with ID: " + id));
+        appointments.remove(toDelete);
+        saveFile();
     }
 
+    /**
+     * Registers a payment against an appointment.
+     * Updates the appointment status to PAID or CREDIT
+     * depending on the payment type, then saves to file.
+     *
+     * @param id      the ID of the appointment to register payment for
+     * @param payment the {@link Payment} to attach to the appointment
+     */
     public static void registerPayment(int id, Payment payment) {
         // TODO — implement in Register Payment story
     }
 
+    /**
+     * Returns a copy of all appointments currently in memory.
+     *
+     * @return a new {@link ArrayList} containing all appointments
+     */
     public static ArrayList<Appointment> getAllAppointments() {
         return new ArrayList<>(appointments);
     }
 
+    /**
+     * Returns all appointments scheduled on the given date.
+     *
+     * @param date the date to filter by
+     * @return a new {@link ArrayList} of appointments on that date,
+     *         empty if none found
+     */
     public static ArrayList<Appointment> getAppointmentsByDate(LocalDate date) {
         ArrayList<Appointment> result = new ArrayList<>();
         for (Appointment a : appointments) {
@@ -154,6 +243,16 @@ public class FileStorage {
     // SLOT MANAGEMENT
     // ─────────────────────────────────────────────
 
+    /**
+     * Returns all available time slots for the given date.
+     * Checks existing appointments to exclude already booked slots.
+     * Available slots are generated from a fixed array of hourly
+     * slots between 10:00 and 17:00.
+     *
+     * @param date the date to check availability for
+     * @return a new {@link ArrayList} of available {@link TimeSlot} objects,
+     *         empty if all slots are taken
+     */
     public static ArrayList<TimeSlot> getAvailableSlots(LocalDate date) {
         String[] allSlots = {
                 "10:00", "11:00", "12:00", "13:00",
@@ -184,6 +283,14 @@ public class FileStorage {
         return availableSlots;
     }
 
+    /**
+     * Checks whether a specific time slot is available on a given date.
+     *
+     * @param date the date to check
+     * @param slot the {@link TimeSlot} to check availability for
+     * @return {@code true} if the slot is available
+     * @throws SlotUnavailableException if the slot is already booked
+     */
     public static boolean isSlotAvailable(LocalDate date, TimeSlot slot) {
         ArrayList<TimeSlot> available = getAvailableSlots(date);
         for (TimeSlot ts : available) {
@@ -199,6 +306,10 @@ public class FileStorage {
     // HELPERS
     // ─────────────────────────────────────────────
 
+    /**
+     * Creates the {@code data/} directory if it does not already exist.
+     * Called before every file write operation.
+     */
     private static void createDataFolder() {
         File folder = new File("data");
         if (!folder.exists()) {
@@ -206,6 +317,17 @@ public class FileStorage {
         }
     }
 
+    /**
+     * Converts an {@link Appointment} object into a comma-separated CSV line.
+     * Payment fields are written as {@code "null"} if no payment exists.
+     *
+     * <p>CSV format:</p>
+     * {@code id,customerName,phoneNumber,date,startTime,endTime,
+     * status,paymentType,paymentDate,settled,totalAmount}
+     *
+     * @param appointment the appointment to serialise
+     * @return a CSV-formatted string representing the appointment
+     */
     private static String serializeAppointment(Appointment appointment) {
         String paymentType = "null";
         String paymentDate = "null";
@@ -237,6 +359,19 @@ public class FileStorage {
         );
     }
 
+    /**
+     * Converts a CSV line back into an {@link Appointment} object.
+     * Reconstructs the customer, time slot, status, and payment if present.
+     * Returns {@code null} and prints a warning if the line is malformed.
+     *
+     * <p>Expected CSV format:</p>
+     * {@code id,customerName,phoneNumber,date,startTime,endTime,
+     * status,paymentType,paymentDate,settled,totalAmount}
+     *
+     * @param line a single CSV line from the appointments file
+     * @return the reconstructed {@link Appointment}, or {@code null}
+     *         if the line could not be parsed
+     */
     private static Appointment deserializeAppointment(String line) {
         try {
             String[] fields = line.split(",", -1);
