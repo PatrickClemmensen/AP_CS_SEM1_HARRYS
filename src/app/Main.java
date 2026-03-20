@@ -16,6 +16,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         FileStorage.loadFile();
+        try{
+            //FileStorage.deleteAppointment(3);
+
+        }catch (InvalidInputException e){
+            System.out.println("Error: " + e.getMessage());
+        }
         User currentUser = selectRole();
         routeToMenu(currentUser);
     }

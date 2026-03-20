@@ -161,6 +161,14 @@ public class FileStorage {
      *         {@code false} otherwise
      */
     public static boolean isClosedDay(LocalDate date) {
+        /* Same as:
+        for (ClosedDays cd : closedDays) {
+            if (cd.getDate().equals(date)) {
+                return !cd.isOpen();
+            }
+        }
+        return false;
+        */
         return closedDays.stream()
                 .filter(cd -> cd.getDate().equals(date))
                 .map(cd -> !cd.isOpen())

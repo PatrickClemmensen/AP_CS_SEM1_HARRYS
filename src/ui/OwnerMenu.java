@@ -125,7 +125,7 @@ public class OwnerMenu {
             try {
                 date = InputValidator.validateDate(scanner.nextLine());
                 break;
-            } catch (InvalidDateException e) {
+            } catch (InvalidDateException | InvalidInputException  e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
