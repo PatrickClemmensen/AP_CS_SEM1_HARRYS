@@ -118,6 +118,20 @@ public class OwnerMenu {
 
     }
 
+    /**
+     * This method deletes an appointment and removes it from the {@link FileStorage} APPOINTMENTS_FILE.
+     * Process:
+     * <ul>
+     *   <li>Method validates the date is Monday-Friday and that the format (YYYY-MM-DD) is correct.</li>
+     *   <li>Method then retrieves the ArrayList of appointments on the selected date and validates if there are any appointments on said date.
+     *     <ul>
+     *       <li>If no appointments appear on the selected date, displays a message.</li>
+     *       <li>If appointments appear on the selected date, it displays a list of the appointments with a number assigned to each of them, so the user can identify which appointment to delete by typing the number belonging to the desired appointment. The method also validates that the selection can only be one of the numbers displayed on the list.</li>
+     *     </ul>
+     *   </li>
+     *   <li>Once selected, the system will generate a confirmation message and the appointment is deleted from the ArrayList of appointments associated with the APPOINTMENTS_FILE in {@link FileStorage}.</li>
+     * </ul>
+     **/
     private void deleteBooking() {
         LocalDate date = null;
         while (true) {
