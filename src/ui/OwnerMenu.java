@@ -20,10 +20,22 @@ public class OwnerMenu {
 
     private Scanner scanner = new Scanner(System.in);
 
+
+    /**
+     * Empty constructor for Owner Menu
+     */
     public OwnerMenu() {
 
     }
 
+    /**
+     * Displays the printMenu for the Owner
+     * <p>
+     *     Takes an input from the user and validates the number,
+     *     then enters the selected method in the menu and
+     *     displays that method.
+     * </p>
+     */
     public void show() {
         boolean running = true;
 
@@ -56,6 +68,9 @@ public class OwnerMenu {
         }
     }
 
+    /**
+     * Displays the start menu for the Owner
+     */
     private void printMenu() {
         System.out.println(Colors.MENUHEADER + "\nWelcome to the Salon Owner Menu" + Colors.RESET);
         System.out.println("------------------------------------------");
@@ -67,6 +82,17 @@ public class OwnerMenu {
         System.out.println("6. Return to Main Menu" + Colors.RESET);
     }
 
+
+    /**
+     * User can create a new booking
+     *
+     * <p>
+     *     Validates customer name, phone number and date before checking
+     *     salon availability. Displays available time slots for the selected
+     *     date and creates an appointment based on the user's choice
+     * </p>
+     *
+     */
     private void createBooking() {
         System.out.print("\nEnter customer name: ");
         String name = scanner.nextLine();
@@ -175,6 +201,13 @@ public class OwnerMenu {
         System.out.println(Colors.CONFIRMATION + "Booking deleted successfully." + Colors.RESET);
     }
 
+    /**
+     * Displays all upcoming appointments in the system.
+     * <p>
+     *     Retrieves all appointments from {@link FileStorage} and prints
+     *     them to the console.
+     * </p>
+     */
     private void viewAppointments() {
         for(Appointment a : FileStorage.getAllAppointments()){
             System.out.println(a);

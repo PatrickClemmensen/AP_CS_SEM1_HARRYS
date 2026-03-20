@@ -19,10 +19,24 @@ import java.util.Scanner;
 public class AssistantMenu {
     private Scanner scanner = new Scanner(System.in);
 
+
+    /**
+     * Empty constructor for Assistant Menu
+     */
     public AssistantMenu() {
 
     }
 
+    /**
+     * Displays the printMenu for the assistant
+     *
+     * <p>
+     *     Takes an input from the user and validates the number,
+     *     then enters the selected method in the menu and
+     *     displays that method.
+     * </p>
+     *
+     */
     public void show() {
         boolean running = true;
 
@@ -49,6 +63,9 @@ public class AssistantMenu {
         }
     }
 
+    /**
+     * Displays the start menu for the assistant
+     */
     private void printMenu() {
         System.out.println(Colors.MENUHEADER + "\nWelcome to the Assistant Menu" + Colors.RESET);
         System.out.println("------------------------------------------");
@@ -146,6 +163,20 @@ public class AssistantMenu {
 
     }
 
+    /**
+     * This method deletes an appointment and removes it from the {@link FileStorage} APPOINTMENTS_FILE.
+     * Process:
+     * <ul>
+     *   <li>Method validates the date is Monday-Friday and that the format (YYYY-MM-DD) is correct.</li>
+     *   <li>Method then retrieves the ArrayList of appointments on the selected date and validates if there are any appointments on said date.
+     *     <ul>
+     *       <li>If no appointments appear on the selected date, displays a message.</li>
+     *       <li>If appointments appear on the selected date, it displays a list of the appointments with a number assigned to each of them, so the user can identify which appointment to delete by typing the number belonging to the desired appointment. The method also validates that the selection can only be one of the numbers displayed on the list.</li>
+     *     </ul>
+     *   </li>
+     *   <li>Once selected, the system will generate a confirmation message and the appointment is deleted from the ArrayList of appointments associated with the APPOINTMENTS_FILE in {@link FileStorage}.</li>
+     * </ul>
+     **/
     private void deleteBooking() {
         LocalDate date = null;
         while (true) {
@@ -196,7 +227,6 @@ public class AssistantMenu {
      *     Retrieves all appointments from {@link FileStorage} and prints
      *     them to the console.
      * </p>
-     *
      */
     private void viewAppointments() {
         for (Appointment a : FileStorage.getAllAppointments()) {
