@@ -58,6 +58,17 @@ public class AssistantMenu {
         System.out.println("4. Return to Main Menu" + Colors.RESET);
     }
 
+
+    /**
+     * User can create a new booking
+     *
+     * <p>
+     *     Validates customer name, phone number and date before checking
+     *     salon availability. Displays available time slots for the selected
+     *     date and creates an appointment based on the user's choice
+     * </p>
+     *
+     */
     private void createBooking() {
         String name = null;
 
@@ -178,6 +189,15 @@ public class AssistantMenu {
         System.out.println(Colors.CONFIRMATION + "Booking deleted successfully." + Colors.RESET);
     }
 
+
+    /**
+     * Displays all upcoming appointments in the system.
+     * <p>
+     *     Retrieves all appointments from {@link FileStorage} and prints
+     *     them to the console.
+     * </p>
+     *
+     */
     private void viewAppointments() {
         for (Appointment a : FileStorage.getAllAppointments()) {
             System.out.println(a);
