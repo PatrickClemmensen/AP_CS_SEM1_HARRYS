@@ -16,7 +16,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 /**
- * Menu flow for the assistant role.
+ * Menu flow for the owner role.
  * <p>
  *     An Owner can do the following:
  *     <ul>

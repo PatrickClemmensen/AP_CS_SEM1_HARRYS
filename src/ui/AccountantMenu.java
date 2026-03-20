@@ -14,7 +14,7 @@ public class AccountantMenu {
     private Scanner scanner = new Scanner(System.in);
 
     /**
-     * Menu flow for the assistant role.
+     * Menu flow for the accountant role.
      * <p>
      *     An accountant can do the following:
      *     <ul>
