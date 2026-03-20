@@ -24,7 +24,12 @@ public abstract class Payment {
     }
 
     public double getTotalAmount() {
-        return 0.0;
+        double total = 0.0;
+        for(Product p : products){
+            total += p.getPrice();
+
+        }
+        return total;
     }
 
     /**

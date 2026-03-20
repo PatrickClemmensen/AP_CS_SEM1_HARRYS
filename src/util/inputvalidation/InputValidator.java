@@ -5,7 +5,6 @@ import util.exceptions.InvalidInputException;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
 public class InputValidator {
