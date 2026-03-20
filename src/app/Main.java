@@ -6,6 +6,7 @@ import service.FileStorage;
 import ui.AccountantMenu;
 import ui.AssistantMenu;
 import ui.OwnerMenu;
+import util.colors.Colors;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
 
@@ -21,10 +22,11 @@ public class Main {
 
     public static User selectRole(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Who are you?");
-        System.out.println("1. Salon owner");
-        System.out.println("2. Assistant");
-        System.out.println("3. Accountant");
+        System.out.println(Colors.MENUHEADER + "\nWelcome to the Main Menu" + Colors.RESET);
+        System.out.println("------------------------------------------");
+        System.out.println(Colors.MENUOPTION + "1. Salon Owner Menu");
+        System.out.println("2. Assistant Menu");
+        System.out.println("3. Accountant Menu" + Colors.RESET);
 
         int choice = InputValidator.validateMenuChoice(scanner.nextLine(),0,3);
         return switch(choice){
