@@ -9,6 +9,7 @@ import util.colors.Colors;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
+import util.sorting.SortByDate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -216,13 +217,18 @@ public class OwnerMenu {
     /**
      * Displays all upcoming appointments in the system.
      * <p>
-     *     Retrieves all appointments from {@link FileStorage} and prints
+     *     Retrieves and sorts all appointments from {@link FileStorage} and prints
      *     them to the console.
      * </p>
      */
     private void viewAppointments() {
-        for(Appointment a : FileStorage.getAllAppointments()){
+        ArrayList<Appointment> appointments = FileStorage.getAllAppointments();
+        appointments.sort(new SortByDate());
+        for (Appointment a : appointments) {
+
             System.out.println(a);
+
+        }
     }
 
     //private void registerPayment(){

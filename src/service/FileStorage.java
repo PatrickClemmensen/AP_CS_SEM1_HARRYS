@@ -227,7 +227,11 @@ public class FileStorage {
      * @return a new {@link ArrayList} containing all appointments
      */
     public static ArrayList<Appointment> getAllAppointments() {
+        if(appointments.isEmpty()){
+            System.out.println("List is empty");
+        }
         return new ArrayList<>(appointments);
+
     }
 
     /**

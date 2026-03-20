@@ -84,16 +84,6 @@ public class AccountantMenu {
                     + " | " + dateList.get(i).getTimeslot().getStartTime());
         }
 
-
-
-
-
-
-
-
-
-
-
     }
 
     private void sortAppointments(){

@@ -5,6 +5,7 @@ import model.roles.Customer;
 
 import java.time.LocalDate;
 
+
 public class Appointment {
 
     private int id;
