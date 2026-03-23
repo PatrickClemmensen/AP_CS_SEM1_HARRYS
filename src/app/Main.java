@@ -16,8 +16,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         FileStorage.loadFile();
-        User currentUser = selectRole();
-        routeToMenu(currentUser);
+        while (true) {
+            User currentUser = selectRole();
+            if (currentUser == null) {
+                System.out.println("Exiting program...");
+                break;
+            }
+            routeToMenu(currentUser);
+        }
     }
 
     public static User selectRole(){
@@ -30,7 +36,8 @@ public class Main {
             System.out.println("------------------------------------------");
             System.out.println(Colors.MENUOPTION + "1. Salon Owner Menu");
             System.out.println("2. Assistant Menu");
-            System.out.println("3. Accountant Menu" + Colors.RESET);
+            System.out.println("3. Accountant Menu");
+            System.out.println("0. Exit" + Colors.RESET);
             try{
                 choice = InputValidator.validateMenuChoice(scanner.nextLine(),0,3);
                 break;
@@ -40,6 +47,7 @@ public class Main {
             }
         }
         return switch(choice){
+            case 0 -> null;
             case 1 -> new Owner("Harry");
             case 2 -> new Assistant("Harriet");
             case 3 -> new Accountant("Revisor");
