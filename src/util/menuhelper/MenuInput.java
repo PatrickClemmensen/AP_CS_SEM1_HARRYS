@@ -100,16 +100,18 @@ public class MenuInput {
     }
 
     public static boolean checkPassword(Scanner scanner){
-        System.out.println("Enter password:");
-        String password = scanner.nextLine();
+        while(true) {
+            System.out.println("Enter password:");
+            String password = scanner.nextLine();
 
-        try {
-            InputValidator.validatePassword(password);
-            System.out.println(Colors.CONFIRMATION+"Access granted!"+Colors.RESET);
-            return true;
-        } catch(InvalidInputException e){
-            System.out.println(Colors.ERROR+e.getMessage()+Colors.RESET);
-            return false;
+            try {
+                InputValidator.validatePassword(password);
+                System.out.println(Colors.CONFIRMATION + "Access granted!" + Colors.RESET);
+                return true;
+            } catch (InvalidInputException e) {
+                System.out.println(Colors.ERROR + e.getMessage() + Colors.RESET);
+                return false;
+            }
         }
     }
 }

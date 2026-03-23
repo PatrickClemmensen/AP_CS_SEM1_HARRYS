@@ -12,6 +12,8 @@ import util.sorting.SortByName;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static util.menuhelper.MenuInput.checkPassword;
+
 /**
  * Menu flow for the accountant role.
  * <p>
@@ -63,6 +65,9 @@ public class AccountantMenu extends Menu {
      * then offers sorting options.
      */
     private void lookupByDate() {
+        if (!checkPassword(scanner)) {
+            return;
+        }
         LocalDate date = MenuInput.getDate(
                 "Enter date to look up (YYYY-MM-DD): ", scanner);
 

@@ -19,7 +19,7 @@ public class Main {
         while (true) {
             User currentUser = selectRole();
             if (currentUser == null) {
-                System.out.println("Exiting program...");
+                System.out.println("Exiting program... Ses til nævekamp (ง •̀_•́)ง");
                 break;
             }
             routeToMenu(currentUser);
