@@ -1,5 +1,6 @@
 package util.inputvalidation;
 
+import util.colors.Colors;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
 
@@ -119,5 +120,14 @@ public class InputValidator {
         return name;
     }
 
-
+    public static boolean validatePassword(String input) {
+        String password = input.trim();
+        if (password.isEmpty()) {
+            throw new InvalidInputException("Password cannot be empty.");
+        }
+        if (!password.equals("hairyharry")) {
+            throw new InvalidInputException("Access Denied.");
+        }
+        return true;
+    }
 }

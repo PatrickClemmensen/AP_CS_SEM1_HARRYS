@@ -17,20 +17,19 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static util.inputvalidation.InputValidator.validatePassword;
+
 public abstract class Menu {
     protected Scanner scanner = new Scanner(System.in);
-
-
-
 
 
     /**
      * User can create a new booking
      *
      * <p>
-     *     Validates customer name, phone number and date before checking
-     *     salon availability. Displays available time slots for the selected
-     *     date and creates an appointment based on the user's choice
+     * Validates customer name, phone number and date before checking
+     * salon availability. Displays available time slots for the selected
+     * date and creates an appointment based on the user's choice
      * </p>
      *
      */
@@ -82,7 +81,7 @@ public abstract class Menu {
 
         System.out.println("Available services:");
         for (int i = 0; i < Product.values().length; i++) {
-            if(Product.values()[i].getCategory().equals(Category.SERVICE)){
+            if (Product.values()[i].getCategory().equals(Category.SERVICE)) {
                 availableServices.add(Product.values()[i]);
                 System.out.println((i + 1) + ". " + Product.values()[i]);
             }
@@ -134,7 +133,7 @@ public abstract class Menu {
             try {
                 date = InputValidator.validateDate(scanner.nextLine());
                 break;
-            } catch (InvalidDateException | InvalidInputException  e) {
+            } catch (InvalidDateException | InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
@@ -173,8 +172,8 @@ public abstract class Menu {
     /**
      * Displays all upcoming appointments in the system.
      * <p>
-     *     Retrieves and sorts all appointments from {@link FileStorage} and prints
-     *     them to the console.
+     * Retrieves and sorts all appointments from {@link FileStorage} and prints
+     * them to the console.
      * </p>
      */
     protected void viewAppointments(Scanner scanner) {
@@ -184,6 +183,20 @@ public abstract class Menu {
 
             System.out.println(a);
 
+        }
+    }
+
+    protected boolean checkPassword(Scanner scanner) {
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        try {
+            validatePassword(password);
+            System.out.println(Colors.CONFIRMATION + "Access granted!" + Colors.RESET);
+            return true;
+        } catch (InvalidInputException e) {
+            System.out.println(Colors.ERROR + e.getMessage() + Colors.RESET);
+            return false;
         }
     }
 }

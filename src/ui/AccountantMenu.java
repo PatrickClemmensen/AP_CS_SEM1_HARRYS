@@ -2,9 +2,11 @@ package ui;
 import app.Main;
 import model.appointments.Appointment;
 import service.FileStorage;
+import util.colors.Colors;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
+import static util.inputvalidation.InputValidator.validatePassword;
 import util.sorting.SortByAmount;
 import util.sorting.SortByName;
 
@@ -13,7 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AccountantMenu {
+
+
+public class AccountantMenu extends Menu {
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -41,7 +45,9 @@ public class AccountantMenu {
             switch(choice){
 
                 case 1:
-                    lookupByDate();
+                    if (checkPassword(scanner)) {
+                        lookupByDate();
+                    }
                     break;
 
                 case 2:
