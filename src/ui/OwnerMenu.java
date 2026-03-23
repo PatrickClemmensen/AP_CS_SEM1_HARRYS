@@ -46,9 +46,9 @@ public class OwnerMenu {
     /**
      * Displays the printMenu for the Owner
      * <p>
-     *     Takes an input from the user and validates the number,
-     *     then enters the selected method in the menu and
-     *     displays that method.
+     * Takes an input from the user and validates the number,
+     * then enters the selected method in the menu and
+     * displays that method.
      * </p>
      */
     public void show() {
@@ -61,7 +61,7 @@ public class OwnerMenu {
 
             switch (choice) {
                 case 1:
-                   createBooking();
+                    createBooking();
                     break;
                 case 2:
                     deleteBooking();
@@ -102,9 +102,9 @@ public class OwnerMenu {
      * User can create a new booking
      *
      * <p>
-     *     Validates customer name, phone number and date before checking
-     *     salon availability. Displays available time slots for the selected
-     *     date and creates an appointment based on the user's choice
+     * Validates customer name, phone number and date before checking
+     * salon availability. Displays available time slots for the selected
+     * date and creates an appointment based on the user's choice
      * </p>
      *
      */
@@ -180,7 +180,7 @@ public class OwnerMenu {
             try {
                 date = InputValidator.validateDate(scanner.nextLine());
                 break;
-            } catch (InvalidDateException | InvalidInputException  e) {
+            } catch (InvalidDateException | InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
@@ -219,8 +219,8 @@ public class OwnerMenu {
     /**
      * Displays all upcoming appointments in the system.
      * <p>
-     *     Retrieves and sorts all appointments from {@link FileStorage} and prints
-     *     them to the console.
+     * Retrieves and sorts all appointments from {@link FileStorage} and prints
+     * them to the console.
      * </p>
      */
     private void viewAppointments() {
@@ -233,16 +233,16 @@ public class OwnerMenu {
         }
     }
 
-    private void registerPayment(){
+    private void registerPayment() {
         ArrayList<Appointment> pastAppointments = new ArrayList<>();
-        for (Appointment a : FileStorage.getAllAppointments()){
-            if(a.getDate().isBefore(LocalDate.now())){
-                if(a.getTimeslot().getEndTime().isBefore(LocalTime.now())){
+        for (Appointment a : FileStorage.getAllAppointments()) {
+            if (a.getDate().isBefore(LocalDate.now())) {
+                if (a.getTimeslot().getEndTime().isBefore(LocalTime.now())) {
                     pastAppointments.add(a);
                 }
             }
         }
-        if(pastAppointments.isEmpty()){
+        if (pastAppointments.isEmpty()) {
             System.out.println("No past appointments");
             return;
         }
@@ -250,7 +250,7 @@ public class OwnerMenu {
         System.out.println("\nPast appointments:");
         for (int i = 0; i < pastAppointments.size(); i++) {
             System.out.println((i + 1) + ". "
-                    + pastAppointments.get(i).getCustomer().getName()+" | "+pastAppointments.get(i).getDate()
+                    + pastAppointments.get(i).getCustomer().getName() + " | " + pastAppointments.get(i).getDate()
                     + " | " + pastAppointments.get(i).getTimeslot().getStartTime());
         }
 
@@ -267,7 +267,7 @@ public class OwnerMenu {
             }
         }
 
-        if(selectedAppointment.getStatus().equals(AppointmentStatus.PAID)){
+        if (selectedAppointment.getStatus().equals(AppointmentStatus.PAID)) {
             System.out.println("Appointment already paid.");
             return;
         }
@@ -289,7 +289,8 @@ public class OwnerMenu {
             }
         }
     }
+}
 
 
     //private void  registerClosedDays(){
-}
+

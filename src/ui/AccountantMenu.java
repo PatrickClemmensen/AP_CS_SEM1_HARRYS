@@ -1,8 +1,12 @@
 package ui;
+import app.Main;
 import model.appointments.Appointment;
 import service.FileStorage;
 import util.exceptions.InvalidDateException;
+import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
+import util.sorting.SortByAmount;
+import util.sorting.SortByName;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,6 +49,7 @@ public class AccountantMenu {
                     break;
 
                 case 3:
+                    Main.selectRole();
                     break;
             }
         }
@@ -66,7 +71,7 @@ public class AccountantMenu {
             try {
                 date = InputValidator.validateDate(scanner.nextLine());
                 break;
-            } catch (InvalidDateException e) {
+            } catch (InvalidDateException  | InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
@@ -87,10 +92,49 @@ public class AccountantMenu {
     }
 
     private void sortAppointments(){
+        LocalDate date = null;
+        while (true) {
+            System.out.println("Select a date (YYYY-MM-DD): ");
+            try {
+                date = InputValidator.validateDate(scanner.nextLine());
+                break;
+            } catch (InvalidDateException  | InvalidInputException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+        ArrayList<Appointment> dateList = FileStorage.getAppointmentsByDate(date);
+
+        if (dateList.isEmpty()){
+            System.out.println("No appointments found on " + date + ".");
+            return;
+        }
+        System.out.println("\nAppointments on " + date + ":");
+        for (int i = 0; i < dateList.size(); i++){
+            System.out.println((i + 1) + ". "
+                    + dateList.get(i).getCustomer().getName()
+                    + " | " + dateList.get(i).getTimeslot().getStartTime());
+                    //+ " | " + dateList.get(i).getPayment().getTotalAmount());
+
+        }
+
+        System.out.println("\nSort by Name or Amount?");
+
+        System.out.println("\n1. Name");
+        System.out.println("2. Amount");
+
+        int choice = Integer.parseInt(scanner.nextLine());
+
+        switch (choice){
+            case 1:
+                dateList.sort(new SortByName());
+                for (Appointment a: dateList)
+                    System.out.println(a);
+                break;
+            case 2:
+                dateList.sort(new SortByAmount());
+                break;
+        }
 
     }
-
-
-
 
 }
