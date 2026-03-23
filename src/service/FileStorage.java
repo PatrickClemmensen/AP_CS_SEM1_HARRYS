@@ -216,8 +216,8 @@ public class FileStorage {
      *
      * @param appointment to update Payment for
      */
-    public static void registerPayment(Appointment appointment, AppointmentStatus status) {
-        appointment.setStatus(status);
+    public static void registerPayment(Appointment appointment, Payment payment) {
+        appointment.setPayment(payment);
         saveFile();
     }
 

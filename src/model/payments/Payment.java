@@ -17,26 +17,18 @@ public abstract class Payment {
     }
 
     public ArrayList<Product> getProducts() {
-        return null;
+        return products;
     }
 
-    public void addProduct() {
+    public void addProduct(Product product) {
+        products.add(product);
     }
 
     public double getTotalAmount() {
-        double total = 0.0;
-        for(Product p : products){
-            total += p.getPrice();
-
-        }
-        return total;
+        return totalAmount;
     }
 
-    /**
-     * @deprecated Temporary setter used during CSV deserialization.
-     * Will be removed when getTotalAmount() calculates from List<Product>.
-     */
-    @Deprecated
+
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }

@@ -1,5 +1,6 @@
 package model.appointments;
 
+import model.payments.CashPayment;
 import model.payments.Payment;
 import model.roles.Customer;
 
@@ -21,6 +22,7 @@ public class Appointment {
         this.timeslot = timeslot;
         this.customer = customer;
         this.status = AppointmentStatus.BOOKED;
+        this.payment = new CashPayment(0,this.date);
     }
 
 
