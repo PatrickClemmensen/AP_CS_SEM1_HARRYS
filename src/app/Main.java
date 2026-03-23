@@ -16,30 +16,35 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         FileStorage.loadFile();
-        try{
-            //FileStorage.deleteAppointment(3);
-
-        }catch (InvalidInputException e){
-            System.out.println("Error: " + e.getMessage());
-        }
         User currentUser = selectRole();
         routeToMenu(currentUser);
     }
 
     public static User selectRole(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println(Colors.MENUHEADER + "\nWelcome to the Main Menu" + Colors.RESET);
-        System.out.println("------------------------------------------");
-        System.out.println(Colors.MENUOPTION + "1. Salon Owner Menu");
-        System.out.println("2. Assistant Menu");
-        System.out.println("3. Accountant Menu" + Colors.RESET);
 
-        int choice = InputValidator.validateMenuChoice(scanner.nextLine(),0,3);
+
+        int choice = 0;
+        while(true){
+            System.out.println(Colors.MENUHEADER + "\nWelcome to the Main Menu" + Colors.RESET);
+            System.out.println("------------------------------------------");
+            System.out.println(Colors.MENUOPTION + "1. Salon Owner Menu");
+            System.out.println("2. Assistant Menu");
+            System.out.println("3. Accountant Menu" + Colors.RESET);
+            try{
+                choice = InputValidator.validateMenuChoice(scanner.nextLine(),0,3);
+                break;
+            }catch (InvalidInputException e){
+                System.out.println("Error:" + e.getMessage());
+
+            }
+        }
         return switch(choice){
             case 1 -> new Owner("Harry");
             case 2 -> new Assistant("Harriet");
             case 3 -> new Accountant("Revisor");
             default -> throw new InvalidInputException("Invalid role");
+
         };
     }
 
