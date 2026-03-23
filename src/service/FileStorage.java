@@ -214,11 +214,11 @@ public class FileStorage {
      * Updates the appointment status to PAID or CREDIT
      * depending on the payment type, then saves to file.
      *
-     * @param id      the ID of the appointment to register payment for
-     * @param payment the {@link Payment} to attach to the appointment
+     * @param appointment to update Payment for
      */
-    public static void registerPayment(int id, Payment payment) {
-        // TODO — implement in Register Payment story
+    public static void registerPayment(Appointment appointment, AppointmentStatus status) {
+        appointment.setStatus(status);
+        saveFile();
     }
 
     /**

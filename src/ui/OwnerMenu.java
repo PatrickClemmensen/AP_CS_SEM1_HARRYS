@@ -2,7 +2,9 @@ package ui;
 
 import app.Main;
 import model.appointments.Appointment;
+import model.appointments.AppointmentStatus;
 import model.appointments.TimeSlot;
+import model.products.Product;
 import model.roles.Customer;
 import service.FileStorage;
 import util.colors.Colors;
@@ -68,7 +70,7 @@ public class OwnerMenu {
                     viewAppointments();
                     break;
                 case 4:
-                    //registerPayment();
+                    registerPayment();
                     break;
                 case 5:
                     //registerClosedDays();
@@ -231,9 +233,63 @@ public class OwnerMenu {
         }
     }
 
-    //private void registerPayment(){
+    private void registerPayment(){
+        ArrayList<Appointment> pastAppointments = new ArrayList<>();
+        for (Appointment a : FileStorage.getAllAppointments()){
+            if(a.getDate().isBefore(LocalDate.now())){
+                if(a.getTimeslot().getEndTime().isBefore(LocalTime.now())){
+                    pastAppointments.add(a);
+                }
+            }
+        }
+        if(pastAppointments.isEmpty()){
+            System.out.println("No past appointments");
+            return;
+        }
 
+        System.out.println("\nPast appointments:");
+        for (int i = 0; i < pastAppointments.size(); i++) {
+            System.out.println((i + 1) + ". "
+                    + pastAppointments.get(i).getCustomer().getName()+" | "+pastAppointments.get(i).getDate()
+                    + " | " + pastAppointments.get(i).getTimeslot().getStartTime());
+        }
+
+        Appointment selectedAppointment = null;
+        while (true) {
+            System.out.print("Select appointment to register payment for (1-" + pastAppointments.size() + "): ");
+            try {
+                int choice = InputValidator.validateMenuChoice(
+                        scanner.nextLine(), 1, pastAppointments.size());
+                selectedAppointment = pastAppointments.get(choice - 1);
+                break;
+            } catch (InvalidInputException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+        if(selectedAppointment.getStatus().equals(AppointmentStatus.PAID)){
+            System.out.println("Appointment already paid.");
+            return;
+        }
+        System.out.println("Select new appointment status:");
+        for (int i = 0; i < AppointmentStatus.values().length; i++) {
+            System.out.println((i + 1) + ". " + AppointmentStatus.values()[i]);
+        }
+
+        while (true) {
+            System.out.println("Current status for " + selectedAppointment.getCustomer().getName()
+                    + ": " + selectedAppointment.getStatus());
+            try {
+                int choice = InputValidator.validateMenuChoice(
+                        scanner.nextLine(), 1, AppointmentStatus.values().length);
+                FileStorage.registerPayment(selectedAppointment, AppointmentStatus.values()[choice - 1]);
+                break;
+            } catch (InvalidInputException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
     }
+
 
     //private void  registerClosedDays(){
 }
