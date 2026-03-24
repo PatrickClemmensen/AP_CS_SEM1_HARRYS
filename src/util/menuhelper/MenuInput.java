@@ -4,6 +4,8 @@ import util.colors.Colors;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
+import util.printing.ConsolePrinter;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -32,7 +34,7 @@ public class MenuInput {
             try {
                 return InputValidator.validateDate(scanner.nextLine());
             } catch (InvalidDateException | InvalidInputException e) {
-                System.out.println("Error: " + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
             }
         }
     }
@@ -51,7 +53,7 @@ public class MenuInput {
             try {
                 return InputValidator.validateDateAccountant(scanner.nextLine());
             } catch (InvalidDateException | InvalidInputException e) {
-                System.out.println("Error: " + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
             }
         }
     }
@@ -73,7 +75,7 @@ public class MenuInput {
             try {
                 return InputValidator.validateMenuChoice(scanner.nextLine(), min, max);
             } catch (InvalidInputException e) {
-                System.out.println("Error: " + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
             }
         }
     }
@@ -93,7 +95,7 @@ public class MenuInput {
             try {
                 return InputValidator.validateName(scanner.nextLine());
             } catch (InvalidInputException e) {
-                System.out.println("Error: " + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
             }
         }
     }
@@ -112,7 +114,7 @@ public class MenuInput {
             try {
                 return InputValidator.validatePhone(scanner.nextLine());
             } catch (InvalidInputException e) {
-                System.out.println("Error: " + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
             }
         }
     }
@@ -131,10 +133,10 @@ public class MenuInput {
 
             try {
                 InputValidator.validatePassword(password);
-                System.out.println(Colors.CONFIRMATION + "Access granted!" + Colors.RESET);
+                ConsolePrinter.printConfirmation("Access granted!");
                 return true;
             } catch (InvalidInputException e) {
-                System.out.println(Colors.ERROR + e.getMessage() + Colors.RESET);
+                ConsolePrinter.printError(e.getMessage());
                 return false;
             }
         }

@@ -3,6 +3,7 @@ package ui;
 import util.colors.Colors;
 import util.exceptions.InvalidInputException;
 import util.menuhelper.MenuInput;
+import util.printing.ConsolePrinter;
 
 /**
  * Menu flow for the assistant role.
@@ -44,14 +45,15 @@ public class AssistantMenu extends Menu {
      * Displays the assistant menu options.
      */
     private void printMenu() {
-        System.out.println(Colors.MENUHEADER
-                + "\nWelcome to the Assistant Menu" + Colors.RESET);
-        System.out.println("------------------------------------------");
-        System.out.println(Colors.MENUOPTION
-                + "1. Create a new booking\n"
-                + "2. Delete an existing booking\n"
-                + "3. View all appointments\n"
-                + "4. Return to Main Menu"
-                + Colors.RESET);
+        ConsolePrinter.printMenuHeader(
+                "\nWelcome to the Assistant Menu" +
+                "\n------------------------------------------"
+        );
+        ConsolePrinter.printMenuOption(
+                "1. Create a new booking" +
+                "\n2. Delete an existing booking" +
+                "\n3. View all appointments" +
+                "\n4. Return to Main Menu"
+        );
     }
 }

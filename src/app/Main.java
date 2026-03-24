@@ -5,9 +5,10 @@ import service.FileStorage;
 import ui.AccountantMenu;
 import ui.AssistantMenu;
 import ui.OwnerMenu;
-import util.colors.Colors;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
+import util.printing.ConsolePrinter;
+
 import java.util.Scanner;
 
 public class Main {
@@ -16,7 +17,7 @@ public class Main {
         while (true) {
             User currentUser = selectRole();
             if (currentUser == null) {
-                System.out.println("Exiting program... Ses til nævekamp (ง •̀_•́)ง");
+                ConsolePrinter.printConfirmation("\nExiting program... Ses til nævekamp (ง •̀_•́)ง");
                 break;
             }
             routeToMenu(currentUser);
@@ -29,17 +30,21 @@ public class Main {
 
         int choice = 0;
         while(true){
-            System.out.println(Colors.MENUHEADER + "\nWelcome to the Main Menu" + Colors.RESET);
-            System.out.println("------------------------------------------");
-            System.out.println(Colors.MENUOPTION + "1. Salon Owner Menu");
-            System.out.println("2. Assistant Menu");
-            System.out.println("3. Accountant Menu");
-            System.out.println("0. Exit" + Colors.RESET);
+            ConsolePrinter.printMenuHeader("\nWelcome to the Main Menu" +
+                    "\n------------------------------------------"
+            );
+            ConsolePrinter.printMenuOption("" +
+                    "1. Salon Owner Menu" +
+                    "\n2. Assistant Menu" +
+                    "\n3. Accountant Menu" +
+                    "\n0. Exit"
+            );
+
             try{
                 choice = InputValidator.validateMenuChoice(scanner.nextLine(),0,3);
                 break;
             }catch (InvalidInputException e){
-                System.out.println("Error:" + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
 
             }
         }

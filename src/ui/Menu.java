@@ -9,6 +9,7 @@ import util.colors.Colors;
 import util.menuhelper.MenuDisplay;
 import util.menuhelper.MenuInput;
 import util.menuhelper.MenuSelection;
+import util.printing.ConsolePrinter;
 import util.sorting.SortByAmount;
 import util.sorting.SortByDate;
 import util.sorting.SortByName;
@@ -46,7 +47,7 @@ public abstract class Menu {
         LocalDate date = MenuInput.getDate("Select date (YYYY-MM-DD): ", scanner);
 
         if (AppointmentRepository.isClosedDay(date)) {
-            System.out.println("Salon is closed on " + date + ".");
+            ConsolePrinter.printError("Salon is closed on " + date + ".");
             return;
         }
 
@@ -54,7 +55,7 @@ public abstract class Menu {
         if (slot == null) return;
 
         AppointmentRepository.addAppointment(new Appointment(date, slot, new Customer(name, phone)));
-        System.out.println(Colors.CONFIRMATION + "Booking added!" + Colors.RESET);
+        ConsolePrinter.printConfirmation("Booking added!");
     }
 
     /**
@@ -65,7 +66,7 @@ public abstract class Menu {
 
         ArrayList<Appointment> appointments = AppointmentRepository.getAppointmentsByDate(date);
         if (appointments.isEmpty()) {
-            System.out.println("No appointments found on " + date + ".");
+            ConsolePrinter.printError("No appointments found on " + date + ".");
             return;
         }
 
@@ -75,8 +76,7 @@ public abstract class Menu {
                 scanner);
 
         AppointmentRepository.deleteAppointment(selected.getId());
-        System.out.println(Colors.CONFIRMATION
-                + "Booking deleted successfully." + Colors.RESET);
+        ConsolePrinter.printConfirmation("Booking deleted successfully!");
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class Menu {
     protected void viewAppointments(Scanner scanner) {
         ArrayList<Appointment> appointments = AppointmentRepository.getAllAppointments();
         if (appointments.isEmpty()) {
-            System.out.println("No appointments found.");
+            ConsolePrinter.printError("No appointments found.");
             return;
         }
         appointments.sort(new SortByDate());
@@ -104,7 +104,7 @@ public abstract class Menu {
 
         ArrayList<Appointment> appointments = AppointmentRepository.getAppointmentsByDate(date);
         if (appointments.isEmpty()) {
-            System.out.println("No appointments found on " + date + ".");
+            ConsolePrinter.printError("No appointments found on " + date + ".");
             return;
         }
 
@@ -120,10 +120,12 @@ public abstract class Menu {
      * @return the sorted {@link ArrayList} of appointments
      */
     private ArrayList<Appointment> sortResults(ArrayList<Appointment> appointments) {
-        System.out.println("\nSort by:");
-        System.out.println("1. Customer name");
-        System.out.println("2. Payment amount");
-        System.out.println("3. No sorting");
+        ConsolePrinter.printMenuOption(
+                "\nSort by: " +
+                "\n1. Customer name" +
+                "\n2. Payment amount" +
+                "\n3. No sorting"
+        );
 
         int choice = MenuInput.getMenuChoice("Select sort order (1-3): ", 1, 3, scanner);
         switch (choice) {

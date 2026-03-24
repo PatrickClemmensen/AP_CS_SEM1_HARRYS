@@ -3,6 +3,7 @@ package ui;
 import util.colors.Colors;
 import util.exceptions.InvalidInputException;
 import util.menuhelper.MenuInput;
+import util.printing.ConsolePrinter;
 
 /**
  * Menu flow for the accountant role.
@@ -31,7 +32,7 @@ public class AccountantMenu extends Menu {
                     case 2 -> running = false;
                 }
             } catch (InvalidInputException e) {
-                System.out.println("Error: " + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
             }
         }
     }
@@ -40,12 +41,13 @@ public class AccountantMenu extends Menu {
      * Displays the accountant menu options.
      */
     private void printMenu() {
-        System.out.println(Colors.MENUHEADER
-                + "\nWelcome to the Accountant Menu" + Colors.RESET);
-        System.out.println("------------------------------------------");
-        System.out.println(Colors.MENUOPTION
-                + "1. Access financial records\n"
-                + "2. Return to Main Menu"
-                + Colors.RESET);
+        ConsolePrinter.printMenuHeader(
+                "\nWelcome to the Accountant Menu" +
+                "\n------------------------------------------"
+        );
+        ConsolePrinter.printMenuOption(
+                "1. Access financial records" +
+                "\n2. Return to Main Menu"
+        );
     }
 }
