@@ -78,6 +78,18 @@ public class AppointmentRepository {
         FileStorage.saveAppointments(appointments);
     }
 
+    public static void settleAppointment(int id) {
+        Appointment appointment = appointments.stream()
+                .filter(a -> a.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new InvalidInputException(
+                        "No appointment found with ID: " + id));
+
+        ((CreditPayment) appointment.getPayment()).setSettled(true);
+        appointment.setStatus(AppointmentStatus.COMPLETED);
+        FileStorage.saveAppointments(appointments);
+    }
+
     /**
      * Registers a payment against an appointment.
      * Updates the appointment status to PAID or CREDIT
@@ -158,8 +170,26 @@ public class AppointmentRepository {
         ArrayList<Appointment> result = new ArrayList<>();
         for (Appointment a : appointments) {
             if (a.getDate().isBefore(LocalDate.now())
-                    && (a.getStatus() == AppointmentStatus.BOOKED
-                    || a.getStatus() == AppointmentStatus.COMPLETED)) {
+                    && (a.getStatus() == AppointmentStatus.BOOKED)) {
+                result.add(a);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Returns all appointments with an unsettled credit payment.
+     * Filters for BOOKED status with a CREDIT payment that is not yet settled.
+     *
+     * @return a new {@link ArrayList} of unsettled credit appointments
+     */
+    public static ArrayList<Appointment> getUnsettledCreditAppointments() {
+        ArrayList<Appointment> result = new ArrayList<>();
+        for (Appointment a : appointments) {
+            if (a.getStatus() == AppointmentStatus.BOOKED
+                    && a.getPayment() != null
+                    && a.getPayment().getPaymentStatus() == PaymentStatus.CREDIT
+                    && !((CreditPayment) a.getPayment()).isSettled()) {
                 result.add(a);
             }
         }

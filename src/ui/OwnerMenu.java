@@ -1,12 +1,17 @@
 package ui;
 
+import model.appointments.Appointment;
+import model.appointments.AppointmentStatus;
+import model.payments.PaymentStatus;
 import service.AppointmentRepository;
 import service.FileStorage;
 import util.colors.Colors;
 import util.exceptions.InvalidInputException;
 import util.menuhelper.MenuInput;
+import util.menuhelper.MenuSelection;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Menu flow for the salon owner role.
@@ -33,20 +38,35 @@ public class OwnerMenu extends Menu {
         while (running) {
             printMenu();
             try {
-                int choice = MenuInput.getMenuChoice("", 1, 7, scanner);
+                int choice = MenuInput.getMenuChoice("", 1, 8, scanner);
                 switch (choice) {
                     case 1 -> createBooking(scanner);
                     case 2 -> deleteBooking(scanner);
                     case 3 -> viewAppointments(scanner);
                     case 4 -> new PaymentMenu().show(scanner);
-                    case 5 -> registerClosedDay();
-                    case 6 -> accessFinancialRecords();
-                    case 7 -> running = false;
+                    case 5 -> settlePayment();
+                    case 6 -> registerClosedDay();
+                    case 7 -> accessFinancialRecords();
+                    case 8 -> running = false;
                 }
             } catch (InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
+    }
+
+    private void settlePayment() {
+        ArrayList<Appointment> unpaid = AppointmentRepository.getUnsettledCreditAppointments();
+
+        if (unpaid.isEmpty()) {
+            System.out.println("No unsettled past appointments found.");
+            return;
+        }
+
+        Appointment selected      = MenuSelection.selectAppointment(unpaid,
+                "Select appointment (1-" + unpaid.size() + "): ", scanner);
+        AppointmentRepository.settleAppointment(selected.getId());
+
     }
 
     /**
@@ -61,9 +81,10 @@ public class OwnerMenu extends Menu {
                 + "2. Delete an existing booking\n"
                 + "3. View all appointments\n"
                 + "4. Register payment\n"
-                + "5. Register a closed business day\n"
-                + "6. Access financial records\n"
-                + "7. Return to Main Menu"
+                + "5. Settle payment\n"
+                + "6. Register a closed business day\n"
+                + "7. Access financial records\n"
+                + "8. Return to Main Menu"
                 + Colors.RESET);
     }
 
