@@ -3,6 +3,7 @@ package service;
 import model.appointments.*;
 import model.payments.Payment;
 import model.payments.CreditPayment;
+import model.payments.PaymentStatus;
 import util.exceptions.InvalidInputException;
 import util.exceptions.SlotUnavailableException;
 
@@ -93,7 +94,10 @@ public class AppointmentRepository {
                 .orElseThrow(() -> new InvalidInputException(
                         "No appointment found with ID: " + id));
         appointment.setPayment(payment);
-        appointment.setStatus(AppointmentStatus.COMPLETED);
+        if(payment.getPaymentStatus() == PaymentStatus.CASH){
+            appointment.setStatus(AppointmentStatus.COMPLETED);
+        }
+
         FileStorage.saveAppointments(appointments);
     }
 
