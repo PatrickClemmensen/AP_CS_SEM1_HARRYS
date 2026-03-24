@@ -32,14 +32,15 @@ public class OwnerMenu extends Menu {
         while (running) {
             printMenu();
             try {
-                int choice = MenuInput.getMenuChoice("", 1, 6, scanner);
+                int choice = MenuInput.getMenuChoice("", 1, 7, scanner);
                 switch (choice) {
                     case 1 -> createBooking(scanner);
                     case 2 -> deleteBooking(scanner);
                     case 3 -> viewAppointments(scanner);
                     case 4 -> new PaymentMenu().show(scanner);
                     case 5 -> registerClosedDay();
-                    case 6 -> running = false;
+                    case 6 -> accessFinancialRecords();
+                    case 7 -> running = false;
                 }
             } catch (InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
@@ -60,7 +61,8 @@ public class OwnerMenu extends Menu {
                 + "3. View all appointments\n"
                 + "4. Register payment\n"
                 + "5. Register a closed business day\n"
-                + "6. Return to Main Menu"
+                + "6. Access financial records\n"
+                + "7. Return to Main Menu"
                 + Colors.RESET);
     }
 

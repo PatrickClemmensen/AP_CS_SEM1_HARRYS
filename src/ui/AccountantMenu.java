@@ -1,18 +1,8 @@
 package ui;
 
-import model.appointments.Appointment;
-import service.FileStorage;
 import util.colors.Colors;
 import util.exceptions.InvalidInputException;
-import util.menuhelper.MenuDisplay;
 import util.menuhelper.MenuInput;
-import util.sorting.SortByAmount;
-import util.sorting.SortByName;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-import static util.menuhelper.MenuInput.checkPassword;
 
 /**
  * Menu flow for the accountant role.
@@ -25,7 +15,6 @@ import static util.menuhelper.MenuInput.checkPassword;
  * </p>
  */
 public class AccountantMenu extends Menu {
-
     /**
      * Displays the accountant menu and handles user interaction.
      * Loops until the user chooses to quit.
@@ -38,8 +27,8 @@ public class AccountantMenu extends Menu {
             try {
                 int choice = MenuInput.getMenuChoice("", 1, 2, scanner);
                 switch (choice) {
-                    case 1 -> lookupByDate();
-                    case 2 -> running = false;
+                    case 1 -> accessFinancialRecords();
+                    case 0 -> running = false;
                 }
             } catch (InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());
@@ -55,50 +44,8 @@ public class AccountantMenu extends Menu {
                 + "\nWelcome to the Accountant Menu" + Colors.RESET);
         System.out.println("------------------------------------------");
         System.out.println(Colors.MENUOPTION
-                + "1. Look up appointments by date\n"
+                + "1. Access financial records\n"
                 + "2. Return to Main Menu"
                 + Colors.RESET);
-    }
-
-    /**
-     * Looks up all appointments on a given past date,
-     * then offers sorting options.
-     */
-    private void lookupByDate() {
-        if (!checkPassword(scanner)) {
-            return;
-        }
-        LocalDate date = MenuInput.getDate(
-                "Enter date to look up (YYYY-MM-DD): ", scanner);
-
-        ArrayList<Appointment> appointments = FileStorage.getAppointmentsByDate(date);
-        if (appointments.isEmpty()) {
-            System.out.println("No appointments found on " + date + ".");
-            return;
-        }
-
-        appointments = sortResults(appointments);
-        MenuDisplay.displayAppointmentListWithPayment(appointments);
-    }
-
-    /**
-     * Prompts the accountant to choose a sort order
-     * and returns the sorted list.
-     *
-     * @param appointments the list to sort
-     * @return the sorted {@link ArrayList} of appointments
-     */
-    private ArrayList<Appointment> sortResults(ArrayList<Appointment> appointments) {
-        System.out.println("\nSort by:");
-        System.out.println("1. Customer name");
-        System.out.println("2. Payment amount");
-        System.out.println("3. No sorting");
-
-        int choice = MenuInput.getMenuChoice("Select sort order (1-3): ", 1, 3, scanner);
-        switch (choice) {
-            case 1 -> appointments.sort(new SortByName());
-            case 2 -> appointments.sort(new SortByAmount());
-        }
-        return appointments;
     }
 }

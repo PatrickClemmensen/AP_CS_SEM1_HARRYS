@@ -8,11 +8,15 @@ import util.colors.Colors;
 import util.menuhelper.MenuDisplay;
 import util.menuhelper.MenuInput;
 import util.menuhelper.MenuSelection;
+import util.sorting.SortByAmount;
 import util.sorting.SortByDate;
+import util.sorting.SortByName;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static util.menuhelper.MenuInput.checkPassword;
 
 /**
  * Abstract base class for all menu types in the system.
@@ -86,5 +90,47 @@ public abstract class Menu {
         appointments.sort(new SortByDate());
         MenuDisplay.displayAppointmentList(appointments);
     }
+    /**
+     * Looks up all appointments on a given past date,
+     * then offers sorting options.
+     */
+    protected void accessFinancialRecords() {
+        if (!checkPassword(scanner)) {
+            return;
+        }
+        LocalDate date = MenuInput.getDate(
+                "Enter date to look up (YYYY-MM-DD): ", scanner);
+
+        ArrayList<Appointment> appointments = FileStorage.getAppointmentsByDate(date);
+        if (appointments.isEmpty()) {
+            System.out.println("No appointments found on " + date + ".");
+            return;
+        }
+
+        appointments = sortResults(appointments);
+        MenuDisplay.displayAppointmentListWithPayment(appointments);
+    }
+
+    /**
+     * Prompts the accountant to choose a sort order
+     * and returns the sorted list.
+     *
+     * @param appointments the list to sort
+     * @return the sorted {@link ArrayList} of appointments
+     */
+    private ArrayList<Appointment> sortResults(ArrayList<Appointment> appointments) {
+        System.out.println("\nSort by:");
+        System.out.println("1. Customer name");
+        System.out.println("2. Payment amount");
+        System.out.println("3. No sorting");
+
+        int choice = MenuInput.getMenuChoice("Select sort order (1-3): ", 1, 3, scanner);
+        switch (choice) {
+            case 1 -> appointments.sort(new SortByName());
+            case 2 -> appointments.sort(new SortByAmount());
+        }
+        return appointments;
+    }
+
 
 }
