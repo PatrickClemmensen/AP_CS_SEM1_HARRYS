@@ -7,6 +7,7 @@ import model.payments.CreditPayment;
 import model.payments.Payment;
 import model.products.Category;
 import model.products.Product;
+import service.AppointmentRepository;
 import service.FileStorage;
 import util.colors.Colors;
 
@@ -35,7 +36,7 @@ public class MenuSelection {
      * @return the selected {@link TimeSlot}, or {@code null} if none available
      */
     public static TimeSlot selectTimeSlot(LocalDate date, Scanner scanner) {
-        ArrayList<TimeSlot> availableSlots = FileStorage.getAvailableSlots(date);
+        ArrayList<TimeSlot> availableSlots = AppointmentRepository.getAvailableSlots(date);
 
         if (availableSlots.isEmpty()) {
             System.out.println("No available slots on " + date + ".");

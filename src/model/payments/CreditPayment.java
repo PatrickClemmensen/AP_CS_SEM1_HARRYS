@@ -10,6 +10,9 @@ public class CreditPayment extends Payment {
         isSettled = false;
     }
 
+    @Override
+    public PaymentStatus getPaymentStatus() { return PaymentStatus.CREDIT;}
+
     public boolean isSettled() {
         return isSettled;
     }
@@ -17,4 +20,7 @@ public class CreditPayment extends Payment {
     public void setSettled(boolean settled){
         this.isSettled = settled;
     }
+
+    @Override
+    public String getSettledString() { return String.valueOf(isSettled()); }
 }

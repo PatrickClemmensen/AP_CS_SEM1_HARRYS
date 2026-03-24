@@ -1,9 +1,9 @@
 package ui;
 
 import model.appointments.Appointment;
-import model.appointments.AppointmentStatus;
 import model.appointments.TimeSlot;
 import model.roles.Customer;
+import service.AppointmentRepository;
 import service.FileStorage;
 import util.colors.Colors;
 import util.menuhelper.MenuDisplay;
@@ -45,7 +45,7 @@ public abstract class Menu {
         String phone   = MenuInput.getPhone("Enter phone number: ", scanner);
         LocalDate date = MenuInput.getDate("Select date (YYYY-MM-DD): ", scanner);
 
-        if (FileStorage.isClosedDay(date)) {
+        if (AppointmentRepository.isClosedDay(date)) {
             System.out.println("Salon is closed on " + date + ".");
             return;
         }
@@ -53,7 +53,7 @@ public abstract class Menu {
         TimeSlot slot = MenuSelection.selectTimeSlot(date, scanner);
         if (slot == null) return;
 
-        FileStorage.addAppointment(new Appointment(date, slot, new Customer(name, phone)));
+        AppointmentRepository.addAppointment(new Appointment(date, slot, new Customer(name, phone)));
         System.out.println(Colors.CONFIRMATION + "Booking added!" + Colors.RESET);
     }
 
@@ -63,7 +63,7 @@ public abstract class Menu {
     protected void deleteBooking(Scanner scanner) {
         LocalDate date = MenuInput.getDate("Select date (YYYY-MM-DD): ", scanner);
 
-        ArrayList<Appointment> appointments = FileStorage.getAppointmentsByDate(date);
+        ArrayList<Appointment> appointments = AppointmentRepository.getAppointmentsByDate(date);
         if (appointments.isEmpty()) {
             System.out.println("No appointments found on " + date + ".");
             return;
@@ -74,7 +74,7 @@ public abstract class Menu {
                 "Select appointment to delete (1-" + appointments.size() + "): ",
                 scanner);
 
-        FileStorage.deleteAppointment(selected.getId());
+        AppointmentRepository.deleteAppointment(selected.getId());
         System.out.println(Colors.CONFIRMATION
                 + "Booking deleted successfully." + Colors.RESET);
     }
@@ -83,7 +83,7 @@ public abstract class Menu {
      * Displays all appointments sorted by date and time.
      */
     protected void viewAppointments(Scanner scanner) {
-        ArrayList<Appointment> appointments = FileStorage.getAllAppointments();
+        ArrayList<Appointment> appointments = AppointmentRepository.getAllAppointments();
         if (appointments.isEmpty()) {
             System.out.println("No appointments found.");
             return;
@@ -102,7 +102,7 @@ public abstract class Menu {
         LocalDate date = MenuInput.getDateAccountant(
                 "Enter date to look up (YYYY-MM-DD): ", scanner);
 
-        ArrayList<Appointment> appointments = FileStorage.getAppointmentsByDate(date);
+        ArrayList<Appointment> appointments = AppointmentRepository.getAppointmentsByDate(date);
         if (appointments.isEmpty()) {
             System.out.println("No appointments found on " + date + ".");
             return;
@@ -133,19 +133,5 @@ public abstract class Menu {
         return appointments;
     }
 
-    /**
-     * Returns all past appointments that have not yet been paid.
-     *
-     * @return list of unpaid past {@link Appointment} objects
-     */
-    protected ArrayList<Appointment> getUnpaidPastAppointments() {
-        ArrayList<Appointment> result = new ArrayList<>();
-        for (Appointment a : FileStorage.getAllAppointments()) {
-            if (a.getDate().isBefore(LocalDate.now())
-                    && !(a.getStatus() == AppointmentStatus.COMPLETED)) {
-                result.add(a);
-            }
-        }
-        return result;
-    }
+
 }

@@ -1,5 +1,6 @@
 package app;
 import model.roles.*;
+import service.AppointmentRepository;
 import service.FileStorage;
 import ui.AccountantMenu;
 import ui.AssistantMenu;
@@ -11,8 +12,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        FileStorage.loadFile();
-        FileStorage.loadClosedDays();
+        AppointmentRepository.load();
         while (true) {
             User currentUser = selectRole();
             if (currentUser == null) {

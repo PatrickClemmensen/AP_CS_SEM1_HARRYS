@@ -4,6 +4,7 @@ import model.appointments.Appointment;
 import model.appointments.AppointmentStatus;
 import model.payments.Payment;
 import model.products.Product;
+import service.AppointmentRepository;
 import service.FileStorage;
 import util.colors.Colors;
 import util.menuhelper.MenuDisplay;
@@ -41,7 +42,7 @@ public class PaymentMenu extends Menu {
      * @param scanner the shared {@link Scanner} instance from {@link OwnerMenu}
      */
     public void show(Scanner scanner) {
-        ArrayList<Appointment> unpaid = getUnpaidPastAppointments();
+        ArrayList<Appointment> unpaid = AppointmentRepository.getUnpaidPastAppointments();
 
         if (unpaid.isEmpty()) {
             System.out.println("No unpaid past appointments found.");
@@ -57,7 +58,7 @@ public class PaymentMenu extends Menu {
         MenuDisplay.displayPaymentSummary(service, addons, total);
 
         Payment payment = MenuSelection.selectPaymentType(total, scanner);
-        FileStorage.registerPayment(selected, payment);
+        AppointmentRepository.registerPayment(selected.getId(),payment);
 
         System.out.println(Colors.CONFIRMATION
                 + "Payment registered. Total: " + total + " kr"

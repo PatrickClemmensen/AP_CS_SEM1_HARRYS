@@ -1,5 +1,6 @@
 package ui;
 
+import service.AppointmentRepository;
 import service.FileStorage;
 import util.colors.Colors;
 import util.exceptions.InvalidInputException;
@@ -73,7 +74,7 @@ public class OwnerMenu extends Menu {
     private void registerClosedDay() {
         LocalDate date = MenuInput.getDate(
                 "Enter date to register as closed (YYYY-MM-DD): ", scanner);
-        FileStorage.addClosedDay(new model.appointments.ClosedDays(date, false));
+        AppointmentRepository.addClosedDay(new model.appointments.ClosedDays(date, false));
         System.out.println(Colors.CONFIRMATION
                 + "Closed day registered: " + date + Colors.RESET);
     }

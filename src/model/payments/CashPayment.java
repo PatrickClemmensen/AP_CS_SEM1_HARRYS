@@ -7,6 +7,7 @@ public class CashPayment extends Payment {
     public CashPayment(double totalAmount,LocalDate date) {
         super(totalAmount, date);
     }
-
+    @Override
+    public PaymentStatus getPaymentStatus() { return PaymentStatus.CASH;}
 
 }
