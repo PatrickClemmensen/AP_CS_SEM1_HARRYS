@@ -8,6 +8,13 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Utility class for validating user input across the application.
+ * <p>
+ *     All methods throw runtime exceptions if validation fails,
+ *     allowing menus to catch and display errors without crashing.
+ * </p>
+ */
 public class InputValidator {
 
 
@@ -42,17 +49,17 @@ public class InputValidator {
     }
 
     /**
-     * Validates a date string and converts it to a LocalDate.
+     * Validates a date string and converts it to a LocalDate for accountant use.
      * <p> Must have the following criteria:
      *     <ul>
      *         <li>Must be in the format YYYY-MM-DD</li>
-     *         <li>Must not be in the past</li>
+     *         <li>Must not be in the future</li>
      *         <li>Must be a weekday (Monday - Friday)</li>
      *     </ul>
      * </p>
      * @param input  date string
      * @return a {@link LocalDate} representing the validated date
-     * @throws InvalidDateException falls on a weekend.
+     * @throws InvalidDateException if the date is in the future or falls on a weekend.
      * @throws InvalidInputException if the input cannot be parsed,
      */
     public static LocalDate validateDateAccountant(String input){
@@ -149,6 +156,13 @@ public class InputValidator {
         return name;
     }
 
+    /**
+     * Validates a password string against the salon's master password.
+     *
+     * @param input the password string to validate
+     * @return true if the password is correct
+     * @throws InvalidInputException if the password is empty or incorrect
+     */
     public static boolean validatePassword(String input) {
         String password = input.trim();
         if (password.isEmpty()) {
