@@ -4,7 +4,6 @@ import util.colors.Colors;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
-
 import java.time.LocalDate;
 import java.util.Scanner;
 

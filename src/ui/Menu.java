@@ -99,7 +99,7 @@ public abstract class Menu {
         if (!checkPassword(scanner)) {
             return;
         }
-        LocalDate date = MenuInput.getDate(
+        LocalDate date = MenuInput.getDateAccountant(
                 "Enter date to look up (YYYY-MM-DD): ", scanner);
 
         ArrayList<Appointment> appointments = FileStorage.getAppointmentsByDate(date);

@@ -1,5 +1,7 @@
 package model.products;
 
+import java.util.ArrayList;
+
 /**
  * Enum of products in Harry's.
  * <p>
@@ -37,6 +39,19 @@ public enum Product {
         return category;
     }
 
+    public static ArrayList<Product> getServices() {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product p : values()) {
+            if (p.category == Category.SERVICE) result.add(p);
+        }
+        return result;
+    }
 
-
+    public static ArrayList<Product> getRetailProducts() {
+        ArrayList<Product> result = new ArrayList<>();
+        for (Product p : values()) {
+            if (p.category == Category.RETAIL) result.add(p);
+        }
+        return result;
+    }
 }

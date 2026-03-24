@@ -74,17 +74,10 @@ public class MenuSelection {
      * @param scanner the shared {@link Scanner} instance
      * @return the selected service {@link Product}
      */
+
     public static Product selectService(Scanner scanner) {
-        ArrayList<Product> services = new ArrayList<>();
-        for (Product p : Product.values()) {
-            if (p.getCategory() == Category.SERVICE) {
-                services.add(p);
-            }
-        }
-
-        System.out.println("\nAvailable services:");
+        ArrayList<Product> services = Product.getServices();
         MenuDisplay.displayProductList(services);
-
         int choice = MenuInput.getMenuChoice(
                 "Select service (1-" + services.size() + "): ",
                 1, services.size(), scanner);
