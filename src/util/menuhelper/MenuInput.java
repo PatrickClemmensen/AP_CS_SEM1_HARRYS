@@ -38,6 +38,25 @@ public class MenuInput {
         }
     }
 
+    /**
+     * Prompts the user for a future weekday date (Mon–Fri).
+     * Loops until a valid date is entered.
+     *
+     * @param prompt  the message shown to the user
+     * @param scanner the shared {@link Scanner} instance
+     * @return a valid future {@link LocalDate}
+     */
+    public static LocalDate getDateAccountant(String prompt, Scanner scanner) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return InputValidator.validateDateAccountant(scanner.nextLine());
+            } catch (InvalidDateException | InvalidInputException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+    }
+
 
     /**
      * Prompts the user for a menu choice within a given range.
