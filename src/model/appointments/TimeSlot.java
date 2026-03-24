@@ -2,6 +2,13 @@ package model.appointments;
 
 import java.time.LocalTime;
 
+/**
+ * Represents a time slot for an appointment at Harry's Salon.
+ * <p>
+ *     Each time slot has a start and end time, defining the duration
+ *     of a booking within the salon's opening hours.
+ * </p>
+ */
 public class TimeSlot {
 
 
@@ -39,6 +46,11 @@ public class TimeSlot {
         return endTime;
     }
 
+    /**
+     * Returns a formatted string representation of this time slot.
+     *
+     * @return a string in the format startTime - endTime
+     */
     @Override
     public String toString() {
         return getStartTime() + " - " +getEndTime();

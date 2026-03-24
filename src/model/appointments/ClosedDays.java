@@ -2,6 +2,13 @@ package model.appointments;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a day that has been marked as closed in Harry's Salon.
+ * <p>
+ *     Used to register holidays or other days when the salon is not open,
+ *     preventing bookings from being made on those dates.
+ * </p>
+ */
 public class ClosedDays {
 
     private LocalDate date;
