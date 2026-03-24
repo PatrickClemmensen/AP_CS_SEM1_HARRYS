@@ -63,7 +63,6 @@ public class PaymentMenu extends Menu {
         System.out.println(Colors.CONFIRMATION
                 + "Payment registered. Total: " + total + " kr"
                 + Colors.RESET);
-        selected.setStatus(AppointmentStatus.COMPLETED);
     }
 
 
