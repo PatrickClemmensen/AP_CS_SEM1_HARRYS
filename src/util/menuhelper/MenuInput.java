@@ -117,6 +117,13 @@ public class MenuInput {
         }
     }
 
+    /**
+     * Prompts the user to enter the salon password for access to restricted features.
+     * Displays a confirmation message on success or an error message on failure.
+     *
+     * @param scanner the shared {@link Scanner} instance
+     * @return true of the correct password was entered, false otherwise
+     */
     public static boolean checkPassword(Scanner scanner){
         while(true) {
             System.out.println("Enter password:");
