@@ -8,8 +8,6 @@ import service.FileStorage;
 import util.colors.Colors;
 import util.menuhelper.MenuDisplay;
 import util.menuhelper.MenuSelection;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -64,24 +62,9 @@ public class PaymentMenu extends Menu {
         System.out.println(Colors.CONFIRMATION
                 + "Payment registered. Total: " + total + " kr"
                 + Colors.RESET);
-        selected.setStatus(AppointmentStatus.PAID);
+        selected.setStatus(AppointmentStatus.COMPLETED);
     }
 
-    /**
-     * Returns all past appointments that have not yet been paid.
-     *
-     * @return list of unpaid past {@link Appointment} objects
-     */
-    private ArrayList<Appointment> getUnpaidPastAppointments() {
-        ArrayList<Appointment> result = new ArrayList<>();
-        for (Appointment a : FileStorage.getAllAppointments()) {
-            if (a.getDate().isBefore(LocalDate.now())
-                    && (a.getStatus() == AppointmentStatus.BOOKED)) {
-                result.add(a);
-            }
-        }
-        return result;
-    }
 
     /**
      * Calculates the total price of a service plus all selected add-ons.

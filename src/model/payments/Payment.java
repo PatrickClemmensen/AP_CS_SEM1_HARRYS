@@ -9,11 +9,13 @@ public abstract class Payment {
     private LocalDate paymentDate;
     private ArrayList<Product> products;
     private double totalAmount;
+    private PaymentStatus paymentStatus;
 
-    public Payment(LocalDate paymentDate) {
+    public Payment(double totalAmount, LocalDate paymentDate) {
         this.paymentDate = paymentDate;
         this.products = new ArrayList<>();
-        this.totalAmount = 0;
+        this.totalAmount = totalAmount;
+        this.paymentStatus = PaymentStatus.CREDIT;
     }
 
     public ArrayList<Product> getProducts() {
@@ -28,6 +30,13 @@ public abstract class Payment {
         return totalAmount;
     }
 
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;

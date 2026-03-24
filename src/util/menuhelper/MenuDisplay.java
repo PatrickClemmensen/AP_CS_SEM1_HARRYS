@@ -1,6 +1,7 @@
 package util.menuhelper;
 
 import model.appointments.Appointment;
+import model.appointments.AppointmentStatus;
 import model.appointments.TimeSlot;
 import model.products.Product;
 
@@ -87,13 +88,12 @@ public class MenuDisplay {
      *
      * @param appointments the list of {@link Appointment} objects to display
      */
-    public static void displayAppointmentListWithPayment(
-            ArrayList<Appointment> appointments) {
+    public static void displayAppointmentListWithPayment(ArrayList<Appointment> appointments) {
         for (int i = 0; i < appointments.size(); i++) {
             Appointment a = appointments.get(i);
             String paymentInfo = a.getPayment() != null
                     ? a.getPayment().getTotalAmount() + " kr"
-                    + " | " + a.getStatus()
+                    + " | " + a.getPayment().getPaymentStatus()
                     : "Unpaid";
             System.out.println((i + 1) + ". "
                     + a.getCustomer().getName()

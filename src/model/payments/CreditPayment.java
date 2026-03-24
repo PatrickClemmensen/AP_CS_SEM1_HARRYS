@@ -6,9 +6,8 @@ public class CreditPayment extends Payment {
     private boolean isSettled;
 
     public CreditPayment(double totalAmount, LocalDate date) {
-        super(date);
+        super(totalAmount, date);
         isSettled = false;
-        setTotalAmount(totalAmount);
     }
 
     public boolean isSettled() {

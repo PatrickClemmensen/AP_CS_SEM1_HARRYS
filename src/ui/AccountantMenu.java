@@ -28,7 +28,7 @@ public class AccountantMenu extends Menu {
                 int choice = MenuInput.getMenuChoice("", 1, 2, scanner);
                 switch (choice) {
                     case 1 -> accessFinancialRecords();
-                    case 0 -> running = false;
+                    case 2 -> running = false;
                 }
             } catch (InvalidInputException e) {
                 System.out.println("Error: " + e.getMessage());

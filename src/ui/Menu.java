@@ -1,6 +1,7 @@
 package ui;
 
 import model.appointments.Appointment;
+import model.appointments.AppointmentStatus;
 import model.appointments.TimeSlot;
 import model.roles.Customer;
 import service.FileStorage;
@@ -132,5 +133,19 @@ public abstract class Menu {
         return appointments;
     }
 
-
+    /**
+     * Returns all past appointments that have not yet been paid.
+     *
+     * @return list of unpaid past {@link Appointment} objects
+     */
+    protected ArrayList<Appointment> getUnpaidPastAppointments() {
+        ArrayList<Appointment> result = new ArrayList<>();
+        for (Appointment a : FileStorage.getAllAppointments()) {
+            if (a.getDate().isBefore(LocalDate.now())
+                    && !(a.getStatus() == AppointmentStatus.COMPLETED)) {
+                result.add(a);
+            }
+        }
+        return result;
+    }
 }

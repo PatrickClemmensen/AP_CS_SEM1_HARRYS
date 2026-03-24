@@ -2,6 +2,7 @@ package model.appointments;
 
 import model.payments.CashPayment;
 import model.payments.Payment;
+import model.payments.PaymentStatus;
 import model.roles.Customer;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ public class Appointment {
     private LocalDate date;
     private TimeSlot timeslot;
     private Customer customer;
-    private AppointmentStatus status;
+    private AppointmentStatus appointmentStatus;
     private Payment payment;
 
 
@@ -21,8 +22,7 @@ public class Appointment {
         this.date = date;
         this.timeslot = timeslot;
         this.customer = customer;
-        this.status = AppointmentStatus.BOOKED;
-        this.payment = new CashPayment(0,this.date);
+        this.appointmentStatus = AppointmentStatus.BOOKED;
     }
 
 
@@ -45,7 +45,7 @@ public class Appointment {
     }
 
     public AppointmentStatus getStatus(){
-        return status;
+        return appointmentStatus;
     }
 
     public Payment getPayment(){
@@ -55,7 +55,7 @@ public class Appointment {
     // Setters
 
     public void setStatus(AppointmentStatus status){
-        this.status = status;
+        this.appointmentStatus = status;
     }
 
     public void setPayment(Payment payment){

@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         FileStorage.loadFile();
+        FileStorage.loadClosedDays();
         while (true) {
             User currentUser = selectRole();
             if (currentUser == null) {
