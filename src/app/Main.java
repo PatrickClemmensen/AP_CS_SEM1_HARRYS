@@ -1,6 +1,4 @@
 package app;
-
-import model.appointments.ClosedDays;
 import model.roles.*;
 import service.FileStorage;
 import ui.AccountantMenu;
@@ -9,8 +7,6 @@ import ui.OwnerMenu;
 import util.colors.Colors;
 import util.exceptions.InvalidInputException;
 import util.inputvalidation.InputValidator;
-
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
