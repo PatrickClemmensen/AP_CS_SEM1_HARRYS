@@ -130,7 +130,7 @@ public abstract class Menu {
                 "\nSort by: " +
                 "\n1. Customer name" +
                 "\n2. Payment amount" +
-                "\n3. No sorting"
+                "\n3. No sorting\n"
         );
 
         int choice = MenuInput.getMenuChoice("Select sort order (1-3): ", 1, 3, scanner);

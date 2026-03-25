@@ -20,9 +20,9 @@ public class SortByAmount implements Comparator<Appointment> {
      *          appointment's total amount is less than, equal to, or greater
      *          than the second.
      */
-    public int compare(Appointment a, Appointment b){
+    public int compare(Appointment a, Appointment b) {
         double amountA = a.getPayment() != null ? a.getPayment().getTotalAmount() : 0.0;
-        double amountB = b.getPayment() != null ? a.getPayment().getTotalAmount() : 0.0;
-        return Double.compare(amountB,amountA);
+        double amountB = b.getPayment() != null ? b.getPayment().getTotalAmount() : 0.0;
+        return Double.compare(amountB, amountA);
     }
 }
