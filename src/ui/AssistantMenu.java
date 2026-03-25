@@ -1,6 +1,5 @@
 package ui;
 
-import util.colors.Colors;
 import util.exceptions.InvalidInputException;
 import util.menuhelper.MenuInput;
 import util.printing.ConsolePrinter;

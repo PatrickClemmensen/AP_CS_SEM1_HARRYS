@@ -1,6 +1,6 @@
 package util.inputvalidation;
 
-import util.AppConstants;import util.exceptions.InvalidInputException;
+import util.constants.AppConstants;import util.exceptions.InvalidInputException;
 
 /**
  * Utility class for validating access credentials.

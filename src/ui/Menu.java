@@ -4,8 +4,6 @@ import model.appointments.Appointment;
 import model.appointments.TimeSlot;
 import model.roles.Customer;
 import service.AppointmentRepository;
-import service.FileStorage;
-import util.colors.Colors;
 import util.menuhelper.MenuDisplay;
 import util.menuhelper.MenuInput;
 import util.menuhelper.MenuSelection;

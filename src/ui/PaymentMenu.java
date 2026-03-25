@@ -1,12 +1,9 @@
 package ui;
 
 import model.appointments.Appointment;
-import model.appointments.AppointmentStatus;
 import model.payments.Payment;
 import model.products.Product;
 import service.AppointmentRepository;
-import service.FileStorage;
-import util.colors.Colors;
 import util.menuhelper.MenuDisplay;
 import util.menuhelper.MenuSelection;
 import util.printing.ConsolePrinter;

@@ -1,12 +1,9 @@
 package ui;
 
 import model.appointments.Appointment;
-import model.appointments.AppointmentStatus;
 import model.appointments.ClosedDays;
-import model.payments.PaymentStatus;
 import service.AppointmentRepository;
-import service.FileStorage;
-import util.colors.Colors;
+import util.constants.Colors;
 import util.exceptions.InvalidInputException;
 import util.menuhelper.MenuInput;
 import util.menuhelper.MenuSelection;

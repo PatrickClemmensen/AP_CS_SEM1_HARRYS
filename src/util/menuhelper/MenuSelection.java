@@ -8,9 +8,7 @@ import model.payments.Payment;
 import model.products.Category;
 import model.products.Product;
 import service.AppointmentRepository;
-import service.FileStorage;
-import util.AppConstants;
-import util.colors.Colors;
+import util.constants.AppConstants;
 import util.printing.ConsolePrinter;
 
 import java.time.LocalDate;

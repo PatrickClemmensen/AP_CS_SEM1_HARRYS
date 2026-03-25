@@ -4,9 +4,8 @@ import model.appointments.*;
 import model.payments.Payment;
 import model.payments.CreditPayment;
 import model.payments.PaymentStatus;
-import util.AppConstants;
+import util.constants.AppConstants;
 import util.exceptions.InvalidInputException;
-import util.exceptions.SlotUnavailableException;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

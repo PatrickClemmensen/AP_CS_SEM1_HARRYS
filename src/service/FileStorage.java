@@ -6,7 +6,7 @@ import model.payments.CreditPayment;
 import model.payments.Payment;
 import model.payments.PaymentStatus;
 import model.roles.Customer;
-import util.AppConstants;
+import util.constants.AppConstants;
 import util.printing.ConsolePrinter;
 
 import java.io.File;

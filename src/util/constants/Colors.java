@@ -1,4 +1,4 @@
-package util.colors;
+package util.constants;
 
 /**
  * Utility class containing ANSI color codes for console output formatting.

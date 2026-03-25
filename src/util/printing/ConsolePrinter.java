@@ -1,8 +1,6 @@
 package util.printing;
 
-import util.colors.Colors;
-
-import java.awt.*;
+import util.constants.Colors;
 
 /**
  * Utility class for printing formatted messages to the console.
