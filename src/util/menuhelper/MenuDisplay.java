@@ -4,6 +4,7 @@ import model.appointments.Appointment;
 import model.appointments.AppointmentStatus;
 import model.appointments.TimeSlot;
 import model.products.Product;
+import util.printing.ConsolePrinter;
 
 import java.util.ArrayList;
 
@@ -70,15 +71,16 @@ public class MenuDisplay {
      */
     public static void displayPaymentSummary(Product service,
                                              ArrayList<Product> addons, double total) {
-        System.out.println("\n--- Payment Summary ---");
-        System.out.println("Service:  " + service
+        ConsolePrinter.printMenuHeader("\n--- Payment Summary ---");
+        ConsolePrinter.printMenuOption("Service:  " + service
                 + " — " + service.getPrice() + " kr");
         for (Product addon : addons) {
-            System.out.println("Add-on:   " + addon
+            ConsolePrinter.printMenuOption("Add-on:   " + addon
                     + " — " + addon.getPrice() + " kr");
         }
-        System.out.println("Total:    " + total + " kr");
-        System.out.println("----------------------");
+        ConsolePrinter.printMenuHeader("----------------------");
+        ConsolePrinter.printConfirmation("Total:    " + total + " kr");
+        ConsolePrinter.printMenuHeader("----------------------");
     }
 
     /**

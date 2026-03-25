@@ -11,7 +11,7 @@ public final class ConsolePrinter {
 
     //Print color formatting
     public static void printError(String message) {
-        System.out.println(Colors.ERROR + "Error! " + message + Colors.RESET);
+        System.out.println(Colors.ERROR + "Please note! " + message + Colors.RESET);
     }
 
     public static void printConfirmation(String message) {
@@ -23,6 +23,6 @@ public final class ConsolePrinter {
     }
 
     public static void printMenuOption(String message) {
-        System.out.print(Colors.MENUOPTION + message + Colors.RESET);
+        System.out.println(Colors.MENUOPTION + message + Colors.RESET);
     }
 }

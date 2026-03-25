@@ -9,6 +9,8 @@ import service.FileStorage;
 import util.colors.Colors;
 import util.menuhelper.MenuDisplay;
 import util.menuhelper.MenuSelection;
+import util.printing.ConsolePrinter;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,7 +47,7 @@ public class PaymentMenu extends Menu {
         ArrayList<Appointment> unpaid = AppointmentRepository.getUnpaidPastAppointments();
 
         if (unpaid.isEmpty()) {
-            System.out.println("No unpaid past appointments found.");
+            ConsolePrinter.printError("No unpaid past appointments found.");
             return;
         }
 
@@ -60,9 +62,7 @@ public class PaymentMenu extends Menu {
         Payment payment = MenuSelection.selectPaymentType(total, scanner);
         AppointmentRepository.registerPayment(selected.getId(),payment);
 
-        System.out.println(Colors.CONFIRMATION
-                + "Payment registered. Total: " + total + " kr"
-                + Colors.RESET);
+        ConsolePrinter.printConfirmation("Payment registered. Total: " + total + " kr");
     }
 
 

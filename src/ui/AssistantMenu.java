@@ -36,7 +36,7 @@ public class AssistantMenu extends Menu {
                     case 4 -> running = false;
                 }
             } catch (InvalidInputException e) {
-                System.out.println("Error: " + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
             }
         }
     }

@@ -10,6 +10,7 @@ import util.colors.Colors;
 import util.exceptions.InvalidInputException;
 import util.menuhelper.MenuInput;
 import util.menuhelper.MenuSelection;
+import util.printing.ConsolePrinter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class OwnerMenu extends Menu {
                     case 8 -> running = false;
                 }
             } catch (InvalidInputException e) {
-                System.out.println("Error: " + e.getMessage());
+                ConsolePrinter.printError(e.getMessage());
             }
         }
     }

@@ -52,7 +52,7 @@ public abstract class Menu {
         }
 
         if (AppointmentRepository.getAvailableSlots(date).isEmpty()) {
-            System.out.println("No available slots on " + date + ".");
+            ConsolePrinter.printError("No available slots on " + date + ".");
             date = MenuSelection.selectAlternativeDate(date, scanner);
             if (date == null) return;
         }

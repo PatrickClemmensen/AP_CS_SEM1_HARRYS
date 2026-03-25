@@ -7,6 +7,7 @@ import model.payments.Payment;
 import model.payments.PaymentStatus;
 import model.roles.Customer;
 import util.AppConstants;
+import util.printing.ConsolePrinter;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class FileStorage {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error loading appointments: " + e.getMessage());
+            ConsolePrinter.printError("Not loading the appointments: " + e.getMessage());
         }
 
         return result;
@@ -83,7 +84,7 @@ public class FileStorage {
                 writer.println(serializeAppointment(a));
             }
         } catch (IOException e) {
-            System.out.println("Error saving appointments: " + e.getMessage());
+            ConsolePrinter.printError("Not saving appointments: " + e.getMessage());
         }
     }
 
@@ -118,7 +119,7 @@ public class FileStorage {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error loading closed days: " + e.getMessage());
+            ConsolePrinter.printError("Not loading closed days: " + e.getMessage());
         }
 
         return result;
@@ -137,7 +138,7 @@ public class FileStorage {
                 writer.println(cd.getDate() + "," + cd.isOpen());
             }
         } catch (IOException e) {
-            System.out.println("Error saving closed days: " + e.getMessage());
+            ConsolePrinter.printError("Not saving closed days: " + e.getMessage());
         }
     }
 
@@ -245,7 +246,7 @@ public class FileStorage {
             return appointment;
 
         } catch (Exception e) {
-            System.out.println("Skipping malformed line: " + line);
+            ConsolePrinter.printError("Skipping malformed line: " + line);
             return null;
         }
     }

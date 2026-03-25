@@ -11,6 +11,7 @@ import service.AppointmentRepository;
 import service.FileStorage;
 import util.AppConstants;
 import util.colors.Colors;
+import util.printing.ConsolePrinter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,11 +41,11 @@ public class MenuSelection {
         ArrayList<TimeSlot> availableSlots = AppointmentRepository.getAvailableSlots(date);
 
         if (availableSlots.isEmpty()) {
-            System.out.println("No available slots on " + date + ".");
+            ConsolePrinter.printError("No available slots on " + date + ".");
             return null;
         }
 
-        System.out.println("\nAvailable slots on " + date + ":");
+        ConsolePrinter.printMenuOption("\nAvailable slots on " + date + ":");
         MenuDisplay.displaySlotList(availableSlots);
 
         int choice = MenuInput.getMenuChoice(
@@ -105,9 +106,9 @@ public class MenuSelection {
 
         ArrayList<Product> selected = new ArrayList<>();
 
-        System.out.println("\nAvailable add-ons:");
+        ConsolePrinter.printMenuHeader("\nAvailable add-ons:");
         MenuDisplay.displayProductList(addons);
-        System.out.println("0. No more add-ons");
+        ConsolePrinter.printMenuOption("0. No more add-ons");
 
         while (true) {
             int choice = MenuInput.getMenuChoice(
@@ -115,9 +116,7 @@ public class MenuSelection {
                     0, addons.size(), scanner);
             if (choice == 0) break;
             selected.add(addons.get(choice - 1));
-            System.out.println(Colors.CONFIRMATION
-                    + "Added: " + addons.get(choice - 1)
-                    + Colors.RESET);
+            ConsolePrinter.printConfirmation("Added: " + addons.get(choice - 1));
         }
 
         return selected;
@@ -133,9 +132,9 @@ public class MenuSelection {
      *         for the given total
      */
     public static Payment selectPaymentType(double total, Scanner scanner) {
-        System.out.println("\nPayment type:");
-        System.out.println("1. Cash");
-        System.out.println("2. Credit");
+        ConsolePrinter.printMenuHeader("\nPayment type:");
+        ConsolePrinter.printMenuOption("1. Cash");
+        ConsolePrinter.printMenuOption("\n2. Credit");
 
         int choice = MenuInput.getMenuChoice(
                 "Select payment type (1-2): ", 1, 2, scanner);
@@ -149,11 +148,11 @@ public class MenuSelection {
                 AppointmentRepository.getNextAvailableDays(from, AppConstants.ALTERNATIVE_DAYS_TO_SHOW);
 
         if (alternatives.isEmpty()) {
-            System.out.println("No available slots in the next "+AppConstants.ALTERNATIVE_DAYS_TO_SHOW+" working days.");
+            ConsolePrinter.printError("No available slots in the next "+AppConstants.ALTERNATIVE_DAYS_TO_SHOW+" working days.");
             return null;
         }
 
-        System.out.println("\nAvailable slots in the next "+AppConstants.ALTERNATIVE_DAYS_TO_SHOW+" working days.");
+        ConsolePrinter.printMenuOption("\nAvailable slots in the next "+AppConstants.ALTERNATIVE_DAYS_TO_SHOW+" working days.");
         for (int i = 0; i < alternatives.size(); i++) {
             int freeSlots = AppointmentRepository.getAvailableSlots(alternatives.get(i)).size();
             System.out.println((i + 1) + ". " + alternatives.get(i)
