@@ -57,6 +57,14 @@ public class OwnerMenu extends Menu {
         }
     }
 
+    /**
+     * Displays all unsettled credit appointments and allows the user to mark one as settled.
+     * <p>
+     *     Retrieves all unsettled credit appointments from {@link AppointmentRepository}
+     *     and prompts the user to select one. The selected appointment is then
+     *     marked as settled
+     * </p>
+     */
     private void settlePayment() {
         ArrayList<Appointment> unpaid = AppointmentRepository.getUnsettledCreditAppointments();
 

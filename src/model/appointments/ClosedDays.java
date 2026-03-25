@@ -41,6 +41,12 @@ public class ClosedDays {
         return isOpen;
     }
 
+    /**
+     * Checks equality based on date only.
+     *
+     * @param o   the reference object with which to compare.
+     * @return true if the other object is a {@link ClosedDays} with the same date
+     */
     @Override
     public boolean equals(Object o){
         if (this == o) return true;

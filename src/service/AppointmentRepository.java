@@ -80,6 +80,16 @@ public class AppointmentRepository {
         FileStorage.saveAppointments(appointments);
     }
 
+    /**
+     * Marks a credit payment as settled for the appointment with the given ID
+     * <p>
+     *     Finds the appointment by ID, sets its {@link CreditPayment} as settled,
+     *     and updates the status to {@link AppointmentStatus#COMPLETED}.
+     * </p>
+     *
+     * @param id the ID of the appointment to settle
+     * @throws InvalidInputException if no appointment with the given ID exists
+     */
     public static void settleAppointment(int id) {
         Appointment appointment = appointments.stream()
                 .filter(a -> a.getId() == id)
@@ -249,6 +259,17 @@ public class AppointmentRepository {
         return availableSlots;
     }
 
+    /**
+     * Returns the next available weekdays with the open time slots from a given date.
+     * <p>
+     *     Skips weekends, closed days, and days with no available slots,
+     *     continuing forward until the requested number of days in found.
+     * </p>
+     *
+     * @param from  the date to start searching from (exclusive)
+     * @param count the number of available days to find
+     * @return an {@link ArrayList} of the next available {@link LocalDate}
+     */
     public static ArrayList<LocalDate> getNextAvailableDays(LocalDate from, int count) {
         ArrayList<LocalDate> result = new ArrayList<>();
         LocalDate date = from.plusDays(1);

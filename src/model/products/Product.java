@@ -26,19 +26,40 @@ public enum Product {
     private final double price;
     private final Category category;
 
+    /**
+     * Creates a new product with a price and category.
+     *
+     * @param price     the price of the product
+     * @param category  the {@link Category} of the product
+     */
     Product(double price, Category category) {
         this.price = price;
         this.category = category;
     }
 
+    /**
+     * Returns the price of this product.
+     *
+     * @return the price as a double
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * Returns the category of this product.
+     *
+     * @return the {@link Category} of this product
+     */
     public Category getCategory() {
         return category;
     }
 
+    /**
+     * Returns a list of all products categorized as services
+     *
+     * @return an {@link ArrayList} of products with {@link Category#SERVICE}
+     */
     public static ArrayList<Product> getServices() {
         ArrayList<Product> result = new ArrayList<>();
         for (Product p : values()) {
@@ -47,6 +68,11 @@ public enum Product {
         return result;
     }
 
+    /**
+     * Returns a list of all products categorized as retail products.
+     *
+     * @return an {@link ArrayList} of products with {@link Category#RETAIL}
+     */
     public static ArrayList<Product> getRetailProducts() {
         ArrayList<Product> result = new ArrayList<>();
         for (Product p : values()) {

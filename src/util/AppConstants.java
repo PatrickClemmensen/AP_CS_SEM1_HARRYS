@@ -2,6 +2,13 @@ package util;
 
 import java.time.LocalTime;
 
+/**
+ * Utility class containing application-wide constants for Harry's Salon.
+ * <p>
+ *     Centralizes configuration values such as file path, opening hours,
+ *     and access credentials to avoid hardcoding them throughout the application.
+ * </p>
+ */
 public class AppConstants {
 
     // File paths

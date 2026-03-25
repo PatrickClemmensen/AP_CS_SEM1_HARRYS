@@ -143,6 +143,19 @@ public class MenuSelection {
                 : new CreditPayment(total, LocalDate.now());
     }
 
+    /**
+     * Displays the next available working dats and prompts the user to select one
+     * <p>
+     *     Retrieves the next available days from {@link AppointmentRepository}
+     *     based on {@link AppConstants#ALTERNATIVE_DAYS_TO_SHOW}, displays each
+     *     date with its number of free slots, and returns the selected date.
+     * </p>
+     *
+     * @param from      the date to start searching from (exclusive)
+     * @param scanner   the shared {@link Scanner} instance
+     * @return          the selected {@link LocalDate}, or null if no alternatives are
+     *                  available or the user cancels
+     */
     public static LocalDate selectAlternativeDate(LocalDate from, Scanner scanner) {
         ArrayList<LocalDate> alternatives =
                 AppointmentRepository.getNextAvailableDays(from, AppConstants.ALTERNATIVE_DAYS_TO_SHOW);
