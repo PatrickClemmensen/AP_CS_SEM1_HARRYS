@@ -7,6 +7,7 @@ import model.payments.PaymentStatus;
 import util.exceptions.InvalidInputException;
 import util.exceptions.SlotUnavailableException;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -123,11 +124,13 @@ public class AppointmentRepository {
      *
      * @param cd the {@link ClosedDays} object to register
      */
-    public static void addClosedDay(ClosedDays cd) {
-        if (!closedDays.contains(cd)) {
-            closedDays.add(cd);
+    public static boolean addClosedDay(ClosedDays cd) {
+        if (closedDays.contains(cd)) {
+            return false;
         }
+        closedDays.add(cd);
         FileStorage.saveClosedDays(closedDays);
+        return true;
     }
 
     // ─────────────────────────────────────────────
@@ -141,6 +144,16 @@ public class AppointmentRepository {
      */
     public static ArrayList<Appointment> getAllAppointments() {
         return new ArrayList<>(appointments);
+    }
+
+    public static ArrayList<Appointment> getFutureAppointments(){
+        ArrayList<Appointment> result = new ArrayList<>();
+        for(Appointment a : appointments){
+            if (!a.getDate().isBefore(LocalDate.now())){
+                result.add(a);
+            }
+        }
+        return result;
     }
 
     /**
@@ -170,7 +183,8 @@ public class AppointmentRepository {
         ArrayList<Appointment> result = new ArrayList<>();
         for (Appointment a : appointments) {
             if (a.getDate().isBefore(LocalDate.now())
-                    && (a.getStatus() == AppointmentStatus.BOOKED)) {
+                    && (a.getStatus() == AppointmentStatus.BOOKED)
+                    && a.getPayment() == null) {
                 result.add(a);
             }
         }
@@ -239,22 +253,20 @@ public class AppointmentRepository {
         return availableSlots;
     }
 
-    /**
-     * Checks whether a specific time slot is available on a given date.
-     *
-     * @param date the date to check
-     * @param slot the {@link TimeSlot} to check
-     * @return {@code true} if the slot is available
-     * @throws SlotUnavailableException if the slot is already booked
-     */
-    public static boolean isSlotAvailable(LocalDate date, TimeSlot slot) {
-        for (TimeSlot ts : getAvailableSlots(date)) {
-            if (ts.getStartTime().equals(slot.getStartTime())) {
-                return true;
+    public static ArrayList<LocalDate> getNextAvailableDays(LocalDate from, int count) {
+        ArrayList<LocalDate> result = new ArrayList<>();
+        LocalDate date = from.plusDays(1);
+        while (result.size() < count) {
+            DayOfWeek day = date.getDayOfWeek();
+            if (day != DayOfWeek.SATURDAY
+                    && day != DayOfWeek.SUNDAY
+                    && !isClosedDay(date)
+                    && !getAvailableSlots(date).isEmpty()) {
+                result.add(date);
             }
+            date = date.plusDays(1);
         }
-        throw new SlotUnavailableException(
-                "The slot " + slot.getStartTime() + " on " + date + " is not available.");
+        return result;
     }
 
     // ─────────────────────────────────────────────

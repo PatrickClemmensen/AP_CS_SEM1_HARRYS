@@ -41,4 +41,11 @@ public class ClosedDays {
         return isOpen;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (!(o instanceof ClosedDays)) return false;
+        return this.date.equals(((ClosedDays) o).date);
+    }
+
 }

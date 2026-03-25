@@ -51,6 +51,12 @@ public abstract class Menu {
             return;
         }
 
+        if (AppointmentRepository.getAvailableSlots(date).isEmpty()) {
+            System.out.println("No available slots on " + date + ".");
+            date = MenuSelection.selectAlternativeDate(date, scanner);
+            if (date == null) return;
+        }
+
         TimeSlot slot = MenuSelection.selectTimeSlot(date, scanner);
         if (slot == null) return;
 
@@ -83,7 +89,7 @@ public abstract class Menu {
      * Displays all appointments sorted by date and time.
      */
     protected void viewAppointments(Scanner scanner) {
-        ArrayList<Appointment> appointments = AppointmentRepository.getAllAppointments();
+        ArrayList<Appointment> appointments = AppointmentRepository.getFutureAppointments();
         if (appointments.isEmpty()) {
             ConsolePrinter.printError("No appointments found.");
             return;

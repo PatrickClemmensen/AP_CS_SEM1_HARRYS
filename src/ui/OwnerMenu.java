@@ -2,6 +2,7 @@ package ui;
 
 import model.appointments.Appointment;
 import model.appointments.AppointmentStatus;
+import model.appointments.ClosedDays;
 import model.payments.PaymentStatus;
 import service.AppointmentRepository;
 import service.FileStorage;
@@ -79,7 +80,7 @@ public class OwnerMenu extends Menu {
         System.out.println(Colors.MENUOPTION
                 + "1. Create a new booking\n"
                 + "2. Delete an existing booking\n"
-                + "3. View all appointments\n"
+                + "3. View upcoming appointments\n"
                 + "4. Register payment\n"
                 + "5. Settle payment\n"
                 + "6. Register a closed business day\n"
@@ -95,8 +96,11 @@ public class OwnerMenu extends Menu {
     private void registerClosedDay() {
         LocalDate date = MenuInput.getDate(
                 "Enter date to register as closed (YYYY-MM-DD): ", scanner);
-        AppointmentRepository.addClosedDay(new model.appointments.ClosedDays(date, false));
-        System.out.println(Colors.CONFIRMATION
-                + "Closed day registered: " + date + Colors.RESET);
+        boolean added = AppointmentRepository.addClosedDay(new ClosedDays(date, false));
+        if (added) {
+            System.out.println(Colors.CONFIRMATION + "Closed day registered: " + date + Colors.RESET);
+        } else {
+            System.out.println(Colors.ERROR + date + " is already registered as closed." + Colors.RESET);
+        }
     }
 }

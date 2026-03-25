@@ -142,4 +142,28 @@ public class MenuSelection {
                 ? new CashPayment(total, LocalDate.now())
                 : new CreditPayment(total, LocalDate.now());
     }
+
+    public static LocalDate selectAlternativeDate(LocalDate from, Scanner scanner) {
+        ArrayList<LocalDate> alternatives =
+                AppointmentRepository.getNextAvailableDays(from, 5);
+
+        if (alternatives.isEmpty()) {
+            System.out.println("No available slots in the next 5 working days.");
+            return null;
+        }
+
+        System.out.println("\nAvailable dates in the future");
+        for (int i = 0; i < alternatives.size(); i++) {
+            int freeSlots = AppointmentRepository.getAvailableSlots(alternatives.get(i)).size();
+            System.out.println((i + 1) + ". " + alternatives.get(i)
+                    + " (" + freeSlots + " slots free)");
+        }
+
+        int choice = MenuInput.getMenuChoice(
+                "Select a date (1-" + alternatives.size() + ") or 0 to cancel: ",
+                0, alternatives.size(), scanner);
+
+        if (choice == 0) return null;
+        return alternatives.get(choice - 1);
+    }
 }

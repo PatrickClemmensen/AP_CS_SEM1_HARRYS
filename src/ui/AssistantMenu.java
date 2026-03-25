@@ -52,7 +52,7 @@ public class AssistantMenu extends Menu {
         ConsolePrinter.printMenuOption(
                 "1. Create a new booking" +
                 "\n2. Delete an existing booking" +
-                "\n3. View all appointments" +
+                "\n3. View upcoming appointments" +
                 "\n4. Return to Main Menu"
         );
     }

@@ -67,8 +67,8 @@ public class InputValidator {
             LocalDate date = LocalDate.parse(input);
             if(date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
                 throw new InvalidDateException("Date must be a weekday (Mon-Fri)");
-            }else if(date.isAfter(LocalDate.now())){
-                throw new InvalidDateException("Date cannot be in the future");
+            }else if(!date.isBefore(LocalDate.now())){
+                throw new InvalidDateException("Date must be in the past");
             }
             return date;
         } catch (DateTimeParseException e){
