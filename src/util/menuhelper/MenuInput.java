@@ -3,8 +3,10 @@ package util.menuhelper;
 import util.colors.Colors;
 import util.exceptions.InvalidDateException;
 import util.exceptions.InvalidInputException;
-import util.inputvalidation.InputValidator;
-import util.printing.ConsolePrinter;
+import util.inputvalidation.MenuChoiceValidator;
+import util.inputvalidation.PasswordValidator;
+import util.inputvalidation.CustomerValidator;
+import util.inputvalidation.DateValidator;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -32,32 +34,31 @@ public class MenuInput {
         while (true) {
             System.out.print(prompt);
             try {
-                return InputValidator.validateDate(scanner.nextLine());
+                return DateValidator.validateDate(scanner.nextLine());
             } catch (InvalidDateException | InvalidInputException e) {
-                ConsolePrinter.printError(e.getMessage());
+                System.out.println("Error: " + e.getMessage());
             }
         }
     }
 
     /**
-     * Prompts the user for a future weekday date (Mon–Fri).
+     * Prompts the user for a past weekday date (Mon–Fri).
      * Loops until a valid date is entered.
      *
      * @param prompt  the message shown to the user
      * @param scanner the shared {@link Scanner} instance
-     * @return a valid future {@link LocalDate}
+     * @return a valid past {@link LocalDate}
      */
     public static LocalDate getDateAccountant(String prompt, Scanner scanner) {
         while (true) {
             System.out.print(prompt);
             try {
-                return InputValidator.validateDateAccountant(scanner.nextLine());
+                return DateValidator.validateDateAccountant(scanner.nextLine());
             } catch (InvalidDateException | InvalidInputException e) {
-                ConsolePrinter.printError(e.getMessage());
+                System.out.println("Error: " + e.getMessage());
             }
         }
     }
-
 
     /**
      * Prompts the user for a menu choice within a given range.
@@ -73,9 +74,9 @@ public class MenuInput {
         while (true) {
             System.out.print(prompt);
             try {
-                return InputValidator.validateMenuChoice(scanner.nextLine(), min, max);
+                return MenuChoiceValidator.validateMenuChoice(scanner.nextLine(), min, max);
             } catch (InvalidInputException e) {
-                ConsolePrinter.printError(e.getMessage());
+                System.out.println("Error: " + e.getMessage());
             }
         }
     }
@@ -86,16 +87,15 @@ public class MenuInput {
      *
      * @param prompt  the message shown to the user
      * @param scanner the shared {@link Scanner} instance
-     * @return a validated name string containing only letters,
-     *         spaces, hyphens, and apostrophes
+     * @return a validated name string
      */
     public static String getName(String prompt, Scanner scanner) {
         while (true) {
             System.out.print(prompt);
             try {
-                return InputValidator.validateName(scanner.nextLine());
+                return CustomerValidator.validateName(scanner.nextLine());
             } catch (InvalidInputException e) {
-                ConsolePrinter.printError(e.getMessage());
+                System.out.println("Error: " + e.getMessage());
             }
         }
     }
@@ -112,9 +112,9 @@ public class MenuInput {
         while (true) {
             System.out.print(prompt);
             try {
-                return InputValidator.validatePhone(scanner.nextLine());
+                return CustomerValidator.validatePhone(scanner.nextLine());
             } catch (InvalidInputException e) {
-                ConsolePrinter.printError(e.getMessage());
+                System.out.println("Error: " + e.getMessage());
             }
         }
     }
@@ -124,19 +124,18 @@ public class MenuInput {
      * Displays a confirmation message on success or an error message on failure.
      *
      * @param scanner the shared {@link Scanner} instance
-     * @return true of the correct password was entered, false otherwise
+     * @return true if the correct password was entered, false otherwise
      */
-    public static boolean checkPassword(Scanner scanner){
-        while(true) {
+    public static boolean checkPassword(Scanner scanner) {
+        while (true) {
             System.out.println("Enter password:");
             String password = scanner.nextLine();
-
             try {
-                InputValidator.validatePassword(password);
-                ConsolePrinter.printConfirmation("Access granted!");
+                PasswordValidator.validatePassword(password);
+                System.out.println(Colors.CONFIRMATION + "Access granted!" + Colors.RESET);
                 return true;
             } catch (InvalidInputException e) {
-                ConsolePrinter.printError(e.getMessage());
+                System.out.println(Colors.ERROR + e.getMessage() + Colors.RESET);
                 return false;
             }
         }

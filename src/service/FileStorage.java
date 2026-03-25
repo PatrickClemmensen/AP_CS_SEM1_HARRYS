@@ -6,6 +6,7 @@ import model.payments.CreditPayment;
 import model.payments.Payment;
 import model.payments.PaymentStatus;
 import model.roles.Customer;
+import util.AppConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +30,8 @@ import java.util.Scanner;
  */
 public class FileStorage {
 
-    private static final String APPOINTMENTS_FILE = "data/appointments.csv";
-    private static final String CLOSED_DAYS_FILE  = "data/closeddays.csv";
+    private static final String APPOINTMENTS_FILE = AppConstants.APPOINTMENTS_FILE;
+    private static final String CLOSED_DAYS_FILE  = AppConstants.CLOSED_DAYS_FILE;
 
     // ─────────────────────────────────────────────
     // APPOINTMENTS

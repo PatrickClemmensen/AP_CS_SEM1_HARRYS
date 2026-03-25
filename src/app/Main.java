@@ -1,12 +1,11 @@
 package app;
 import model.roles.*;
 import service.AppointmentRepository;
-import service.FileStorage;
 import ui.AccountantMenu;
 import ui.AssistantMenu;
 import ui.OwnerMenu;
 import util.exceptions.InvalidInputException;
-import util.inputvalidation.InputValidator;
+import util.inputvalidation.MenuChoiceValidator;
 import util.printing.ConsolePrinter;
 
 import java.util.Scanner;
@@ -41,7 +40,7 @@ public class Main {
             );
 
             try{
-                choice = InputValidator.validateMenuChoice(scanner.nextLine(),0,3);
+                choice = MenuChoiceValidator.validateMenuChoice(scanner.nextLine(),0,3);
                 break;
             }catch (InvalidInputException e){
                 ConsolePrinter.printError(e.getMessage());

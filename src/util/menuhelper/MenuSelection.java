@@ -9,6 +9,7 @@ import model.products.Category;
 import model.products.Product;
 import service.AppointmentRepository;
 import service.FileStorage;
+import util.AppConstants;
 import util.colors.Colors;
 
 import java.time.LocalDate;
@@ -145,14 +146,14 @@ public class MenuSelection {
 
     public static LocalDate selectAlternativeDate(LocalDate from, Scanner scanner) {
         ArrayList<LocalDate> alternatives =
-                AppointmentRepository.getNextAvailableDays(from, 5);
+                AppointmentRepository.getNextAvailableDays(from, AppConstants.ALTERNATIVE_DAYS_TO_SHOW);
 
         if (alternatives.isEmpty()) {
-            System.out.println("No available slots in the next 5 working days.");
+            System.out.println("No available slots in the next "+AppConstants.ALTERNATIVE_DAYS_TO_SHOW+" working days.");
             return null;
         }
 
-        System.out.println("\nAvailable dates in the future");
+        System.out.println("\nAvailable slots in the next "+AppConstants.ALTERNATIVE_DAYS_TO_SHOW+" working days.");
         for (int i = 0; i < alternatives.size(); i++) {
             int freeSlots = AppointmentRepository.getAvailableSlots(alternatives.get(i)).size();
             System.out.println((i + 1) + ". " + alternatives.get(i)
