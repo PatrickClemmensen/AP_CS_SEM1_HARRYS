@@ -243,6 +243,7 @@ public class AppointmentRepository {
             if (!isTaken) {
                 availableSlots.add(timeSlot);
             }
+            current = current.plusHours(1);
         }
 
         return availableSlots;
