@@ -4,6 +4,7 @@ import model.appointments.*;
 import model.payments.Payment;
 import model.payments.CreditPayment;
 import model.payments.PaymentStatus;
+import util.AppConstants;
 import util.exceptions.InvalidInputException;
 import util.exceptions.SlotUnavailableException;
 
@@ -224,27 +225,21 @@ public class AppointmentRepository {
      *         empty if all slots are taken
      */
     public static ArrayList<TimeSlot> getAvailableSlots(LocalDate date) {
-        String[] allSlots = {
-                "10:00", "11:00", "12:00", "13:00",
-                "14:00", "15:00", "16:00", "17:00"
-        };
-
         ArrayList<TimeSlot> availableSlots = new ArrayList<>();
+        LocalTime current = AppConstants.OPENING_TIME;
 
-        for (String slot : allSlots) {
-            LocalTime startTime = LocalTime.parse(slot);
-            LocalTime endTime   = startTime.plusHours(1);
-            TimeSlot timeSlot   = new TimeSlot(startTime, endTime);
+        while (current.isBefore(AppConstants.CLOSING_TIME)){
+            LocalTime endTime   = current.plusHours(1);
+            TimeSlot timeSlot   = new TimeSlot(current, endTime);
 
             boolean isTaken = false;
             for (Appointment a : appointments) {
                 if (a.getDate().equals(date) &&
-                        a.getTimeslot().getStartTime().equals(startTime)) {
+                        a.getTimeslot().getStartTime().equals(current)) {
                     isTaken = true;
                     break;
                 }
             }
-
             if (!isTaken) {
                 availableSlots.add(timeSlot);
             }
