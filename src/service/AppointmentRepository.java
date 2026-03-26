@@ -166,6 +166,7 @@ public class AppointmentRepository {
         return result;
     }
 
+
     /**
      * Returns all appointments scheduled on the given date.
      *

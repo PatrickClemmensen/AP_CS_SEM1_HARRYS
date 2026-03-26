@@ -1,7 +1,6 @@
 package util.menuhelper;
 
 import model.appointments.Appointment;
-import model.appointments.AppointmentStatus;
 import model.appointments.TimeSlot;
 import model.products.Product;
 import util.printing.ConsolePrinter;

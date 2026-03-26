@@ -27,7 +27,7 @@ import java.util.Scanner;
 public class PaymentMenu extends Menu {
 
     /**
-     * Required by abstract M  enu — delegates to show(Scanner).
+     * Required by abstract Menu — delegates to show(Scanner).
      * Not used directly; OwnerMenu calls show(scanner) instead.
      */
     @Override
