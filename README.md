@@ -6,11 +6,11 @@ Developed as part of the 1st semester cross-disciplinary project at EK.
 
 ## Group
 
-| Name       | GitHub               |
-|------------|----------------------|
-| [Member A] | [@username]          |
-| [Member B] | [@username]          |
-| [Patrick]  | [@PatrickClemmensen] |
+| Name              | GitHub               |
+|-------------------|----------------------|
+| [Isak Pais]       | [@ispa070]           |
+| [Nicklas Viftrup] | [@NickichanDK]       |
+| [Patrick]         | [@PatrickClemmensen] |
 
 ---
 
