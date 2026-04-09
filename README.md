@@ -118,11 +118,11 @@ data/
 
 | Deliverable | Location | Status |
 |---|---|---|
-| SYS rapport | `SYS_rapport.pdf` |  In progress |
-| ITB presentation | `ITB_presentation.pdf` |  In progress |
-| Domain model | `_sysdev/diagrams/domain-model.png` |  In progress |
-| Activity diagram | `_sysdev/diagrams/activity-diagram.png` |  In progress |
-| Class diagram | `_sysdev/diagrams/class-diagram.png` |  In progress |
+| SYS rapport | `SYS_rapport.pdf` |  Done |
+| ITB presentation | `ITB_presentation.pdf` |  Done |
+| Domain model | `_sysdev/diagrams/domain-model.png` |  Done |
+| Activity diagram | `_sysdev/diagrams/activity-diagram.png` |  Done |
+| Class diagram | `_sysdev/diagrams/class-diagram.png` |  Done |
 
 ---
 
